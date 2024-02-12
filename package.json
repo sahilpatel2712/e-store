@@ -1,0 +1,9 @@
+{
+  "dependencies": {
+    "@splidejs/react-splide": "^0.7.12",
+    "@splidejs/splide-extension-auto-scroll": "^0.5.3",
+    "mongoose": "^7.4.4",
+    "react-icons": "^4.10.1",
+    "swiper": "^10.2.0"
+  }
+}

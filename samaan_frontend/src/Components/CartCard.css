@@ -1,0 +1,161 @@
+.CartCardOuter {
+  width: 100%;
+  height: 250px;
+  padding: 20px 20px;
+}
+
+.CartCardWrapper {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 5%;
+}
+
+.ImageCart {
+  box-sizing: border-box;
+  height: 100%;
+  width: 25%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px 20px;
+}
+
+.ImageCart > img {
+  max-width: 100%;
+  max-height: 100%;
+}
+
+.CartDetails {
+  box-sizing: border-box;
+  padding: 20px 10px;
+  height: 100%;
+  width: 70%;
+}
+.ProductNameCart {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  width: 100%;
+}
+
+.ProductNameCart > h3 {
+  font-size: x-large;
+  font-weight: 700;
+}
+
+.PriceCart {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  width: 100%;
+}
+
+.PriceCart > p {
+  padding: 10px 0;
+  font-size: medium;
+  font-weight: 600;
+}
+
+.PriceCart > p::before {
+  content: "₹";
+  margin-right: 2px;
+}
+
+.PriceCart > p::after {
+  content: "MRP";
+  margin-left: 2px;
+  font-size: small;
+  color: rgba(0, 0, 0, 0.456);
+}
+
+.EditQuantity {
+  padding: 5px 5px;
+  border-radius: 50%;
+  background-color: yellow;
+  cursor: pointer;
+}
+
+.EditQuantity:hover {
+    box-shadow: rgba(0, 0, 0, 0.19) 0px 10px 20px, rgba(0, 0, 0, 0.23) 0px 6px 6px;
+}
+
+.QuantityCart {
+  box-sizing: border-box;
+  padding: 5px 5px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 10px;
+}
+
+.QuantityCart > p {
+  background-color: whitesmoke;
+  box-sizing: border-box;
+  padding: 5px 10px;
+  border: 1px solid black;
+  border-radius: 5px;
+  box-shadow: rgba(0, 0, 0, 0.05) 0px 6px 24px 0px,
+    rgba(0, 0, 0, 0.08) 0px 0px 0px 1px;
+}
+
+.QuantityCart>p>input:focus{
+    border: none;
+    outline: none;
+}
+
+.QuantityCart > p::before {
+  content: "Qty : ";
+}
+
+@media screen and (max-width: 1440px) {
+  .ImageCart {
+    width: 40%;
+  }
+  .CartDetails {
+    width: 60%;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .ImageCart {
+    padding: 0px 0px;
+  }
+  .CartDetails {
+    width: fit-content;
+  }
+  .CartCardOuter {
+    height: 200px;
+  }
+}
+
+@media screen and (max-width: 425px) {
+  .CartDetails {
+    padding: 20px 0px;
+  }
+  .AddToCartWrapper{
+    height: 2rem;
+  }
+  .ProductNameCart>h3{
+    font-size: medium;
+  }
+  .PriceCart>p{
+    font-size: small;
+  }
+
+  .MobileSizeCart{
+    height: 2rem !important;
+  }
+
+  .pillsMobile{
+    max-height: 100% !important;
+  }
+  .CartDetails{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+}

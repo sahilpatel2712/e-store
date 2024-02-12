@@ -1,0 +1,20 @@
+.RightOuter{
+    width: 100%;
+    max-width: 100%;
+    min-height: 30rem;
+    box-sizing: border-box;
+    width: 100%;
+    height: fit-content;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content:space-around;
+    gap:20px;
+}
+
+.ProductsDiv{
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    gap: 20px;
+}

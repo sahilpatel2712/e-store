@@ -1,0 +1,54 @@
+.OnSearchOuter {
+  box-sizing: border-box;
+  width: 100%;
+  min-height: 100%;
+  height: fit-content;
+  padding: 10px 10px;
+  padding-top: 100px;
+  background-image: url("./Logo.png");
+  background-repeat: no-repeat;
+  background-position: center top;
+  align-items: flex-start !important;
+}
+.OnSearchInnerLeft {
+  width: 20%;
+  height: 100%;
+  position: relative;
+  border-radius: 36px;
+  box-shadow: rgba(0, 0, 0, 0.02) 0px 1px 3px 0px,
+    rgba(27, 31, 35, 0.15) 0px 0px 0px 1px;
+}
+.OnSearchInnerRight {
+  box-sizing: border-box;
+  width: 75%;
+  height: fit-content;
+  border-radius: 36px;
+  background-color: white;
+
+}
+
+.Vflex {
+  display: flex;
+  align-items: center;
+}
+
+.AroundFlex {
+  display: flex;
+  justify-content: space-around;
+}
+
+@media screen and (max-width: 1024px) {
+  .OnSearchInnerLeft {
+    box-shadow: none;
+  }
+  .OnSearchOuter {
+    display: block !important;
+  }
+  .OnSearchInnerLeft {
+    border: none;
+    width: 100%;
+  }
+  .OnSearchInnerRight {
+    width: 100%;
+  }
+}

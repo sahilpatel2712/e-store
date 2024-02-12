@@ -1,0 +1,113 @@
+.CartOuter {
+  width: 69%;
+  height: 100%;
+  box-sizing: border-box;
+  padding: 10px 0;
+  min-height: fit-content;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-around;
+}
+
+.SubtotalOuter{
+    box-sizing: border-box;
+    width: 30%;
+    height: fit-content;
+    margin-top: 100px;
+    box-shadow: rgba(0, 0, 0, 0.05) 0px 6px 24px 0px,
+    rgba(0, 0, 0, 0.08) 0px 0px 0px 1px;
+}
+
+.SubtotalCard{
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    padding: 30px 30px;
+
+}
+
+.CartHeader{
+    width: 90%;
+    box-sizing: border-box;
+    padding: 20px 20px;
+}
+
+.CartHeader>h1{
+    font-size: xx-large;
+    font-weight: 700;
+}
+
+.CartWrapper {
+    min-height: 150px;
+  width: 90%;
+  height: 90%;
+  box-shadow: rgba(0, 0, 0, 0.05) 0px 6px 24px 0px,
+    rgba(0, 0, 0, 0.08) 0px 0px 0px 1px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap:5px;
+  justify-content: space-around;
+}
+
+.SubtotalHeader>p{
+    font-size: x-large;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+}
+
+.SubtotalHeader>p>span{
+    display: flex;
+    align-items: center;
+}
+
+.SubtotalHeader>p>span::before{
+    content: '₹';
+    font-size: medium;
+    margin: 0 5px;
+}
+
+.SubtotalCard>button{
+    width: 100%;
+    padding: 5px 0;
+    background-color: yellow;
+    border-radius: 10px;
+    font-size: large;
+    font-weight: 600;
+}
+
+.SubtotalCard>button:hover{
+    box-shadow: rgba(0, 0, 0, 0.05) 0px 6px 24px 0px,
+    rgba(0, 0, 0, 0.08) 0px 0px 0px 1px;
+}
+
+@media screen and (max-width:1024px) {
+    .responsive{
+        flex-direction: column-reverse;
+        justify-content: space-around !important;
+        align-items: center !important;
+    }
+    .CartOuter{
+        width: 100%;
+    }
+    .SubtotalOuter{
+        margin-top: 10px ;
+        width: 90%;
+        box-shadow: none;
+    }
+    .SubtotalHeader>p{
+        justify-content: space-around;
+    }
+}
+
+@media screen and (max-width:375px) {
+    .SubtotalCard{
+        width: 100%;
+    }
+    .SubtotalCard{
+        padding: 10px 5px;
+    }
+}

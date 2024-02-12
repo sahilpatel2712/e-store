@@ -1,0 +1,131 @@
+.Card {
+    display: flex;
+    flex-direction: column;
+    box-sizing: border-box;
+    height: 290px;
+    width: 200px;
+    border: none;
+    border:1px solid rgba(105, 105, 105, 0.098);
+    outline: 1px solid rgba(105, 105, 105, 0.098);
+    border-radius: 10px;
+    overflow: hidden;
+}
+.imageclass
+{
+    width: 100%;
+    height: 144px;
+}
+.CardImage {
+    width: 100%;
+    height: 50%;
+
+
+    object-fit: cover;
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    transition: all 0.3s ease-in-out;
+}
+.Card:hover .CardImage{
+    filter:drop-shadow(1px 1px 4px black);
+    cursor: pointer;
+}
+.CardImage>img {
+    max-width: 100%;
+    max-height: 100%;
+ height: 144px;
+}
+
+.contentOuter {
+    box-sizing: border-box;
+    height: 50%;
+    background-color: white;
+    width: 100%;
+    padding: 8px 10px;
+}
+.Timer {
+    box-sizing: border-box;
+    background-color: rgb(248, 248, 248);
+    height: 15px;
+    width: fit-content;
+    padding: 0 4px;
+    border-radius: 3px;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    margin-bottom: 6px;
+}
+.SvgTimerIcon {
+    height: 100%;
+    width: fit-content;
+    display: flex;
+    align-items: center;
+}
+.TimerText{
+    font-weight: 700;
+    width: fit-content;
+    font-size: 9px;
+    color: rgb(54, 54, 54);
+}
+.Desc{
+    height: calc(100% - 21px);
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    background-color: white;
+}
+.Title{
+    height: 60%;
+    width: 100%;
+}
+.TitleText{
+    box-sizing: border-box;
+    width: 100%;
+    height: 70%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    color: rgb(31, 31, 31);
+    font-weight: 600;
+    font-size: 13px;
+    margin-bottom: 6px;
+}
+.price{
+    box-sizing: border-box;
+    padding: 5px 0;
+    height: 40%;
+    width: 100%;
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+}
+.Stock{
+    font-size: 12px;
+    color: #666;
+}
+.PriceText{
+    padding-left: 3px;
+    padding-bottom: 6px;
+    font-size: 12px;
+    color: rgb(31, 31, 31);
+    font-weight: 600;
+}
+.PriceText::before{
+    content: '₹';
+}
+.AddButton{
+    width: 66px;
+    height: 31px;
+}
+.AddButton>button{
+    cursor: pointer;
+    width: 100%;
+    height: 100%;
+    background-color: rgb(247, 255, 249);
+    border: none;
+    outline: none;
+    border: 1px solid green;
+    border-radius: 5px;
+    color: green;
+}

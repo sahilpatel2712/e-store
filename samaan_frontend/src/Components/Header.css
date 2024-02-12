@@ -1,0 +1,512 @@
+@import url('https://fonts.googleapis.com/css2?family=Mitr:wght@300&family=Rubik&display=swap');
+
+* {
+    font-family: 'Rubik', sans-serif;
+}
+
+body,
+html {
+    padding: 0 0;
+    margin: 0 0;
+}
+
+.VCenter-flex {
+    display: flex;
+    align-items: center;
+}
+
+.Navbar {
+    min-width: 320px;
+    height: 126px;
+    width: 100%;
+    background-color: white;
+}
+
+.UpperNav {
+    width: 100%;
+    height: 70px;
+}
+
+.LowerNav {
+    width: 100%;
+    height: 53px;
+    border-top: 0.5px solid #00000047;
+    border-bottom: 0.5px solid #00000047;
+}
+
+.ToggleIconDiv{
+    height: 100%;
+    margin-left: 20px;
+}
+
+.ToggleButton{
+    background-color: transparent;
+    border: none;
+    outline: none;
+}
+
+.LogoDiv {
+    margin: 0 34px;
+    width: fit-content;
+    height: 100%;
+}
+
+.LogoDiv>img {
+    height: 100%;
+}
+
+.SearchDiv {
+    height: 100%;
+}
+
+.SearchBar {
+    box-sizing: border-box;
+    height: 40px;
+    width: 300px;
+    display: flex;
+    padding: 10px 5px;
+    background-color: white;
+    border: 1px solid rgba(0, 0, 0, 0.401);
+    border-radius: 4px;
+}
+
+.SearchIcon {
+    height: 100%;
+    width: 20px;
+}
+
+.SearchIcon>svg {
+    opacity: 0.7;
+}
+
+.SearchInput {
+    height: 100%;
+    width: 100%;
+    display: flex;
+    align-items: center;
+}
+
+.SearchInput>input {
+    box-sizing: border-box;
+    height: 100%;
+    width: 100%;
+    font-size: medium;
+    padding: 0 4px;
+    margin: 0 0;
+    border: none;
+    outline: none;
+}
+
+.UpperLastDiv {
+    box-sizing: border-box;
+    margin-right: 34px;
+    width: 100%;
+    height: 100%;
+    justify-content: flex-end;
+    gap: 20px;
+}
+
+.BecomeSupp {
+    height: 100%;
+}
+
+.BecomeSuppLink {
+    text-decoration: none;
+    color: black;
+    margin: 0 0;
+    height: 100%;
+    flex-direction: column;
+}
+
+.BecomeSuppContent {
+    margin: 0 0;
+    height: 100%;
+}
+
+.ProfileDiv {
+    height: 100%;
+}
+
+.ProfileLink {
+    text-decoration: none;
+    color: black;
+    height: 100%;
+    flex-direction: column;
+}
+
+.ProfileContent {
+    margin: 0 0;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.ProfileP {
+    margin: 0 0;
+}
+
+.HoverEffectLink {
+    height: 100%;
+}
+
+.HoverEffectLinkPara {
+    height: 100%;
+}
+
+.HoverEffectLink:hover>.HoverEffectLinkPara {
+    height: calc(100% - 8px);
+}
+
+.activeCate{
+    height: 100% ;
+}
+.activeCate::after{
+    content: "";
+    display: absolute;
+    width: 100%;
+    height: 3px;
+    --tw-bg-opacity: 1;
+    background-color: rgb(253 224 71 / var(--tw-bg-opacity));
+}
+
+.HoverEffectLink:hover::after {
+    content: "";
+    width: 100%;
+    height: 3px;
+    --tw-bg-opacity: 1;
+    background-color: rgb(253 224 71 / var(--tw-bg-opacity));
+}
+
+.CartDiv{
+    height: 100%;
+}
+
+.CartLink{
+    height: 100%;
+    text-decoration: none;
+    color: black;
+}
+
+.CartContent {
+    margin: 0 0;
+    flex-direction: column;
+    justify-content: center;
+  
+    
+}
+
+.MenuBannerUl{
+    position: relative;
+    height: 100%;
+    width: calc(100% - 68px);
+    padding: 0 0;
+    margin: 0 34px;
+    list-style: none;
+    justify-content: space-between;
+}
+
+.MenuBannerLi{
+    height: 100%;
+}
+
+.MenuBannerLink{
+    display: flex;
+    flex-direction: column;
+    text-decoration: none;
+    color: black;
+}
+
+.MenuBannerPara{
+    margin: 0 0;
+    display: flex;
+    align-items: center;
+}
+
+.MenuBannerHoverDisplayUl{
+    display: none;
+    box-sizing: border-box;
+    position: absolute;
+    width: calc(100% - 68px);
+    height: fit-content;
+    margin: 0 34px;
+    padding: 0 0;
+    list-style: none;
+    background-color: white;
+    border: 0.5px solid #00000047;
+    max-width: 1468px;
+}
+
+.MenuBannerUl:hover + .MenuBannerHoverDisplayUl{
+    display: block;
+}
+
+.MenuBannerDisplayLi{
+    display: none;
+    color: white;
+}
+
+.MenuBannerDisplayLiDiv{
+    color: white;
+    display: flex;
+    gap: 10px;
+    padding: 5px 5px;
+}
+
+.MenuBannerDisplayLiDiv>img{
+    height: 188px;
+    width: 128px;
+}
+
+.MenuBannerHoverDisplayUl:hover{
+    display: block;
+}
+
+.MenuBannerDisplayLiDiv .DisplayUl:nth-child(even){
+    background-color: rgba(128, 128, 128, 0.093);
+}
+    
+.DisplayUl{
+    margin: 0 0;
+    padding: 10px 10px;
+    list-style: none;
+}
+
+.DisplayLi{
+    color: black;
+    padding: 3px 5px;
+}
+
+.DisplayLi>a{
+    text-decoration: none;
+    color: black;
+    opacity: .7;
+}
+
+.DisplayLi>a:hover{
+    opacity: 1;
+}
+
+.DisplayLi.HeaderLi{
+    padding: 3px 0px;
+    color: black;
+    opacity: .9;
+}
+
+.HeaderLi{
+    font-size: larger;
+}
+
+.Mobile{
+    display: none;
+}
+
+.Laptop{
+    display: visible;
+}
+
+.Profilesvg{
+    position: relative;
+}
+
+.PopOverUser{
+    position: absolute;
+    background-color: white;
+    top: 60px;
+    box-sizing: border-box;
+    border: 1px solid black;
+    z-index: 11;
+    border-radius: 10px;
+}
+
+.PopOverUser>ul{
+    margin: 0 0;
+    padding: 10px 10px;
+}
+
+.PopoverLine{
+    padding: 3px 5px;
+    margin: 0 0;
+    border-radius: 3px;
+}
+
+.PopoverLine>a{
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 5px;
+}
+
+.UserNamePopOver>p{
+    padding: 5px 5px;
+    font-size: large;
+    font-weight: 700;
+}
+
+.PopoverLine:hover{
+
+    background-color: #FDE047;
+}
+
+@media screen and (max-width:1024px) {
+    .Mobile{
+        display: flex;
+    }
+
+    .Laptop{
+        display: none;
+    }
+
+    .PopOverUser{
+        top: 50px;
+        right: 5px;
+    }
+
+    .Navbar{
+        height: 50px;
+    }
+    
+    .UpperNav{
+        height: 100%;
+    }
+
+    .UpperLastDiv{
+        margin-right: 20px;
+    }
+
+    .SearchAfterNavMobile{
+        box-sizing: border-box;
+        width: 100%;
+        padding: 5px 20px;
+    }
+
+    .SearchBar{
+        width: 100%;
+    }
+
+
+    .UpperNav{
+        position: relative;
+    }
+
+    .LowerNav{
+        position: absolute;
+        background-color: white;
+        height: calc(100vh - 52px);
+        display: flex;
+        flex-direction: row;
+    }
+
+    .LowerNav.Laptop{
+        display: none;
+    }
+
+    .MenuBannerUl{
+        overflow-y: scroll;
+        box-sizing: border-box;
+        margin: 0 0;
+        flex-direction: column;
+        width: 70px;
+        border-right: 0.5 solid black;
+    }
+
+    .MenuBannerDisplayLi{
+        display: block !important;
+    }
+
+    .MenuBannerHoverDisplayUl{
+        position: static;
+        width: calc(100% - 72px);
+        max-height: 100%;
+        margin: 0 0;
+        overflow-y: scroll;
+        display: block !important;
+    }
+
+    .DisplayLi{
+        padding: 2px 2px;
+    }
+
+    .DisplayLi>a{
+        font-size: x-small;
+    }
+
+    .MenuBannerDisplayLi{
+        display: block !important;
+    }
+
+    .MenuBannerPara{
+        text-align: center;
+        font-size: xx-small;
+    }
+
+    .SubMenu{
+        display: block !important;
+    }
+}
+
+.active{
+    display: block;
+}
+
+@media screen and (max-width:560px) {
+    .ToggleIconDiv{
+        margin-left: 0px;
+    }
+    .LogoDiv{
+        margin-left: 0px;
+    }
+    .forsupp{
+        padding: 6px 5px !important;
+        margin: 0 0 !important;
+        font-size: small !important;
+    }
+    .NavImage{
+        height: 25px !important;
+        width: 25px !important;
+    }
+    .NavImageWrapper{
+        height: fit-content !important;
+        width: fit-content !important;
+        padding: 5px 5px !important;
+        margin: 0 0 !important;
+        border-radius: 10px !important;
+    }
+    .CartDiv{
+        padding: 2px 2px !important;
+        border-radius: 10px !important;
+        height: fit-content !important;
+        background-color: yellow !important;
+        border-radius: 10px !important;
+    }
+    .CartLink{
+        height: fit-content !important;
+        width: fit-content !important;
+    }
+    .NavImageWrapper>svg{
+        height: 20px !important;
+        width: 20px !important;
+    }
+    .UpperLastDiv{
+        margin-right: 5px;
+        gap: 5px !important;
+        justify-content: flex-end !important;
+    }
+    .LogoDiv{
+        margin-right: 0px !important;
+    }
+    .MobileStyleLoginButton{
+        padding: 6px 6px !important;
+        height: fit-content !important;
+    }
+    .MobileStyleLoginButton>p{
+        font-size: small;
+    }
+}
+
+@media screen and (max-width:425px) {
+    .forsupp{
+        font-size: smaller !important;
+    }
+    .DisappearMobile{
+        display: none;
+    }
+}
