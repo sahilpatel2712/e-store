@@ -1,12 +1,30 @@
 import React from "react";
-import "./App.css";
-import "./loader.css";
-import AuthContext from "./context/Auth";
-import CartContext from "./context/CartContext";
-import AppRouter from "./Components/Routers/AppRouter";
+import Navigation from "./router/Navigation";
+
+import "./styles/input.css";
+import "./styles/index.css";
+import "./styles/cardtwo.css";
+import "./styles/app.css";
+import "./styles/loader.css";
+import "./styles/carousel.css";
+import "./styles/cart.css";
+import "./styles/cartCard.css";
+import "./styles/categories.css";
+import "./styles/categoriesCard.css";
+import "./styles/detailsMain.css";
+import "./styles/divcss.css";
+import "./styles/footer.css";
+import "./styles/onSearch.css";
+import "./styles/onSearchLeft.css";
+import "./styles/onSearchRight.css";
+import "./styles/header.css";
+
+import { useSelector } from "react-redux";
+
 const App = () => {
-  const [cart, setCart] = React.useState([]);
-  const { authTokens } = React.useContext(AuthContext);
+  const { isAuthenticated } = useSelector((state) => state.auth);
+  // const [cart, setCart] = React.useState([]);
+  // const { authTokens } = React.useContext(AuthContext);
   // const fetchCart = async () => {
   //   if(authTokens){
   //   const response = await fetch(
@@ -30,9 +48,9 @@ const App = () => {
   // }, [authTokens]);
   return (
     <div className="  w-[100%] h-[100vh]   ">
-      <CartContext.Provider value={cart}>
-        <AppRouter />
-      </CartContext.Provider>
+      {/* <CartContext.Provider value={cart}> */}
+      <Navigation />
+      {/* </CartContext.Provider> */}
     </div>
   );
 };

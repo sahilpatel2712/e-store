@@ -1,8 +1,7 @@
 import { createContext, useState, useEffect, useCallback } from "react";
 import jwtDecode from "jwt-decode";
 import { useNavigate } from "react-router-dom";
-import "../loader.css";
-import Loader from "../Components/loader/Loader";
+import Loader from "../Components/Loader";
 const AuthContext = createContext();
 
 export default AuthContext;

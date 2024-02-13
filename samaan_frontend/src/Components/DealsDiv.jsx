@@ -5,52 +5,52 @@ import "swiper/css";
 import "swiper/css/pagination";
 import "swiper/css/scrollbar";
 import AuthContext from "../context/Auth";
-import { SkeletonCardTwo } from "./Skeletons/Skeletons";
+import { SkeletonCardTwo } from "./Skeletons";
 
 const DealsDiv = ({ category }) => {
   const [swiper, setSwiper] = React.useState(null);
   const [data, setData] = React.useState();
-  const { authTokens } = React.useContext(AuthContext);
-  const fetchData = async () => {
-    if (authTokens) {
-      console.log("category with auth token");
-      await fetch(
-        `https://api-krudra9125-gmailcom.vercel.app/api/products/${category}`,
-        {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${authTokens["access"]}`,
-          },
-        }
-      )
-        .then((res) => res.json())
-        .then((data) => {
-          console.log(data);
-          setData(data);
-        })
-        .catch((err) => console.log(err));
-    } else {
-      await fetch(
-        `https://api-krudra9125-gmailcom.vercel.app/api/products/${category}`,
-        {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-          },
-        }
-      )
-        .then((res) => res.json())
-        .then((data) => {
-          console.log(data);
-          setData(data);
-        })
-        .catch((err) => console.log(err));
-    }
-  };
-  React.useLayoutEffect(() => {
-    fetchData();
-  }, []);
+  // const { authTokens } = React.useContext(AuthContext);
+  // const fetchData = async () => {
+  //   if (authTokens) {
+  //     console.log("category with auth token");
+  //     await fetch(
+  //       `https://api-krudra9125-gmailcom.vercel.app/api/products/${category}`,
+  //       {
+  //         method: "GET",
+  //         headers: {
+  //           "Content-Type": "application/json",
+  //           Authorization: `Bearer ${authTokens["access"]}`,
+  //         },
+  //       }
+  //     )
+  //       .then((res) => res.json())
+  //       .then((data) => {
+  //         console.log(data);
+  //         setData(data);
+  //       })
+  //       .catch((err) => console.log(err));
+  //   } else {
+  //     await fetch(
+  //       `https://api-krudra9125-gmailcom.vercel.app/api/products/${category}`,
+  //       {
+  //         method: "GET",
+  //         headers: {
+  //           "Content-Type": "application/json",
+  //         },
+  //       }
+  //     )
+  //       .then((res) => res.json())
+  //       .then((data) => {
+  //         console.log(data);
+  //         setData(data);
+  //       })
+  //       .catch((err) => console.log(err));
+  //   }
+  // };
+  // React.useLayoutEffect(() => {
+  //   fetchData();
+  // }, []);
 
   const breakpoints = {
     // when window width is >= 320px

@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import "./CartCard.css";
 import AuthContext from "../context/Auth";
 // import logo from "./Test.png";
 const CartCard = ({

@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
-import "./OnSearchLeft.css";
 import Skeleton from "react-loading-skeleton";
-const OnSearchLeft = ({data,filterFunction}) => {
+import CloseIcon from "../aseets/icons/CloseIcon";
+
+const OnSearchLeft = ({ data, filterFunction }) => {
   const [FilterToggle, setFilterToggle] = useState();
-  // const [Sort, setSort] = useState(false);
-  // const [brandfilter, setbrandfilter] = useState(null);
+
   const handleFilterClick = () => {
     setFilterToggle(!FilterToggle);
   };
@@ -25,44 +25,9 @@ const OnSearchLeft = ({data,filterFunction}) => {
       setFilterToggle(false);
     }
   }, []);
-  // const handleSortClick = (e) => {
-  //   setSort(!Sort);
-  //   console.log(Sort);
-  // };
+
   return (
     <div className="LeftOuter" style={{ position: "sticky" }}>
-      {/* <div
-        className={Sort ? "FilterButton SortActive" : "FilterButton"}
-        style={FilterToggle ? { display: "none" } : { display: "inline-flex" }}
-        onClick={handleSortClick}
-      >
-        <svg
-          width="20px"
-          height="20px"
-          viewBox="0 0 24 24"
-          fill="none"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <g id="SVGRepo_bgCarrier" strokeWidth="0"></g>
-          <g
-            id="SVGRepo_tracerCarrier"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-          ></g>
-          <g id="SVGRepo_iconCarrier">
-            {" "}
-            <path
-              d="M12 13.125C12.3013 13.125 12.5733 13.3052 12.6907 13.5827C12.8081 13.8601 12.7482 14.1808 12.5384 14.3971L8.53844 18.5221C8.39719 18.6678 8.20293 18.75 8.00002 18.75C7.79711 18.75 7.60285 18.6678 7.46159 18.5221L3.46159 14.3971C3.25188 14.1808 3.19192 13.8601 3.30934 13.5827C3.42676 13.3052 3.69877 13.125 4.00002 13.125H7.25002V6C7.25002 5.58579 7.5858 5.25 8.00002 5.25C8.41423 5.25 8.75002 5.58579 8.75002 6V13.125H12Z"
-              fill="#1C274C"
-            ></path>{" "}
-            <path
-              d="M20 10.875C20.3013 10.875 20.5733 10.6948 20.6907 10.4173C20.8081 10.1399 20.7482 9.81916 20.5384 9.60289L16.5384 5.47789C16.3972 5.33222 16.2029 5.25 16 5.25C15.7971 5.25 15.6029 5.33222 15.4616 5.47789L11.4616 9.60289C11.2519 9.81916 11.1919 10.1399 11.3093 10.4173C11.4268 10.6948 11.6988 10.875 12 10.875H15.25V18C15.25 18.4142 15.5858 18.75 16 18.75C16.4142 18.75 16.75 18.4142 16.75 18L16.75 10.875H20Z"
-              fill="#1C274C"
-            ></path>{" "}
-          </g>
-        </svg>
-        Sort
-      </div> */}
       <div
         className="FilterButton"
         style={FilterToggle ? { display: "none" } : { display: "inline-flex" }}
@@ -98,101 +63,42 @@ const OnSearchLeft = ({data,filterFunction}) => {
         style={FilterToggle ? { display: "inline" } : { display: "none" }}
       >
         <div className="FilterHeaderDiv">
-          {/* <div
-            className={Sort ? "FilterButton SortActive" : "FilterButton"}
-            style={
-              FilterToggle ? { display: "inline-flex" } : { display: "none" }
-            }
-            onClick={handleSortClick}
-          >
-            <svg
-              width="20px"
-              height="20px"
-              viewBox="0 0 24 24"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <g id="SVGRepo_bgCarrier" strokeWidth="0"></g>
-              <g
-                id="SVGRepo_tracerCarrier"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              ></g>
-              <g id="SVGRepo_iconCarrier">
-                {" "}
-                <path
-                  d="M12 13.125C12.3013 13.125 12.5733 13.3052 12.6907 13.5827C12.8081 13.8601 12.7482 14.1808 12.5384 14.3971L8.53844 18.5221C8.39719 18.6678 8.20293 18.75 8.00002 18.75C7.79711 18.75 7.60285 18.6678 7.46159 18.5221L3.46159 14.3971C3.25188 14.1808 3.19192 13.8601 3.30934 13.5827C3.42676 13.3052 3.69877 13.125 4.00002 13.125H7.25002V6C7.25002 5.58579 7.5858 5.25 8.00002 5.25C8.41423 5.25 8.75002 5.58579 8.75002 6V13.125H12Z"
-                  fill="#1C274C"
-                ></path>{" "}
-                <path
-                  d="M20 10.875C20.3013 10.875 20.5733 10.6948 20.6907 10.4173C20.8081 10.1399 20.7482 9.81916 20.5384 9.60289L16.5384 5.47789C16.3972 5.33222 16.2029 5.25 16 5.25C15.7971 5.25 15.6029 5.33222 15.4616 5.47789L11.4616 9.60289C11.2519 9.81916 11.1919 10.1399 11.3093 10.4173C11.4268 10.6948 11.6988 10.875 12 10.875H15.25V18C15.25 18.4142 15.5858 18.75 16 18.75C16.4142 18.75 16.75 18.4142 16.75 18L16.75 10.875H20Z"
-                  fill="#1C274C"
-                ></path>{" "}
-              </g>
-            </svg>
-            Sort
-          </div> */}
           <h1 className="FilterHeading">Filters</h1>
           <div className="FilterClose" onClick={handleFilterClick}>
-            <svg
-              width="20px"
-              height="20px"
-              viewBox="0 0 24 24"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <g id="SVGRepo_bgCarrier" strokeWidth="0"></g>
-              <g
-                id="SVGRepo_tracerCarrier"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              ></g>
-              <g id="SVGRepo_iconCarrier">
-                {" "}
-                <path
-                  d="M20.7457 3.32851C20.3552 2.93798 19.722 2.93798 19.3315 3.32851L12.0371 10.6229L4.74275 3.32851C4.35223 2.93798 3.71906 2.93798 3.32854 3.32851C2.93801 3.71903 2.93801 4.3522 3.32854 4.74272L10.6229 12.0371L3.32856 19.3314C2.93803 19.722 2.93803 20.3551 3.32856 20.7457C3.71908 21.1362 4.35225 21.1362 4.74277 20.7457L12.0371 13.4513L19.3315 20.7457C19.722 21.1362 20.3552 21.1362 20.7457 20.7457C21.1362 20.3551 21.1362 19.722 20.7457 19.3315L13.4513 12.0371L20.7457 4.74272C21.1362 4.3522 21.1362 3.71903 20.7457 3.32851Z"
-                  fill="#0F0F0F"
-                ></path>{" "}
-              </g>
-            </svg>
+            <CloseIcon />
           </div>
         </div>
         <div>
           <h2 className="FilterSubHeading">Brands</h2>
           <div className="form-check">
-            {data ? data?.map((item) => {
-              return(
-                <div className="FilterCheckbox">
-                  <input className="form-check-input" type="radio" name='brand' onClick={()=>{
-                    
-                      filterFunction(item.toLowerCase())         
-                              
-                  }}  value={item} id="" />
-                  <label htmlFor="">{item}</label>
-                </div>
-              )
-              
-              }): [1,1,1,1,1].map(item => {
-                return(
-                  <Skeleton height='20px' width='100%' className="FilterCheckbox" style={{display:'block'}}/>
-                )}
-              )}
-            {/* <div className="FilterCheckbox">
-              <input Name="form-check-input" type="checkbox" value="" id="" />
-              <label htmlFor="">Brand1</label>
-            </div>
-            <div className="FilterCheckbox">
-              <input className="form-check-input" type="checkbox" value="" id="" />
-              <label htmlFor="">Brand1</label>
-            </div>
-            <div className="FilterCheckbox">
-              <input className="form-check-input" type="checkbox" value="" id="" />
-              <label htmlFor="">Brand1</label>
-            </div>
-            <div className="FilterCheckbox">
-              <input className="form-check-input" type="checkbox" value="" id="" />
-              <label htmlFor="">Brand1</label>
-            </div> */}
+            {data
+              ? data?.map((item) => {
+                  return (
+                    <div className="FilterCheckbox">
+                      <input
+                        className="form-check-input"
+                        type="radio"
+                        name="brand"
+                        onClick={() => {
+                          filterFunction(item.toLowerCase());
+                        }}
+                        value={item}
+                        id=""
+                      />
+                      <label htmlFor="">{item}</label>
+                    </div>
+                  );
+                })
+              : [1, 1, 1, 1, 1].map((item) => {
+                  return (
+                    <Skeleton
+                      height="20px"
+                      width="100%"
+                      className="FilterCheckbox"
+                      style={{ display: "block" }}
+                    />
+                  );
+                })}
           </div>
         </div>
       </div>

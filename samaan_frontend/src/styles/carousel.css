@@ -1,0 +1,11 @@
+.CarouselWrapper{
+    width: 100%;
+    display: flex;
+    align-items: center;
+}
+
+.CarouselImage{
+    width: 100%;
+    object-fit: contain !important;
+    aspect-ratio: 16/9;
+}

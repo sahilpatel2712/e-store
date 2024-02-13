@@ -8,57 +8,57 @@ import "swiper/css";
 import "swiper/css/pagination";
 import "swiper/css/scrollbar";
 import productDetails from "../context/productDetails";
-import AuthContext from "../context/Auth";
+// import AuthContext from "../context/Auth";
 const DOD = () => {
   const [swiper, setSwiper] = React.useState(null);
-  const { authTokens } = React.useContext(AuthContext);
-  const product_data = React.useContext(productDetails);
+  // const { authTokens } = React.useContext(AuthContext);
+  // const product_data = React.useContext(productDetails);
   const [data, setData] = React.useState();
-  const fetchData = async () => {
-    if (authTokens) {
-      console.log("category with auth token");
-      await fetch(
-        `https://api-krudra9125-gmailcom.vercel.app/api/products/chocolate`,
-        {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${authTokens["access"]}`,
-          },
-        }
-      )
-        .then((res) => res.json())
-        .then((data) => {
-          console.log(data);
-          setData(data);
-        })
-        .catch((err) => console.log(err));
-    } else {
-      await fetch(
-        `https://api-krudra9125-gmailcom.vercel.app/api/products/chocolate`,
-        {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-          },
-        }
-      )
-        .then((res) => res.json())
-        .then((data) => {
-          console.log(data);
-          setData(data);
-        })
-        .catch((err) => console.log(err));
-    }
-  };
+  // const fetchData = async () => {
+  //   if (authTokens) {
+  //     console.log("category with auth token");
+  //     await fetch(
+  //       `https://api-krudra9125-gmailcom.vercel.app/api/products/chocolate`,
+  //       {
+  //         method: "GET",
+  //         headers: {
+  //           "Content-Type": "application/json",
+  //           Authorization: `Bearer ${authTokens["access"]}`,
+  //         },
+  //       }
+  //     )
+  //       .then((res) => res.json())
+  //       .then((data) => {
+  //         console.log(data);
+  //         setData(data);
+  //       })
+  //       .catch((err) => console.log(err));
+  //   } else {
+  //     await fetch(
+  //       `https://api-krudra9125-gmailcom.vercel.app/api/products/chocolate`,
+  //       {
+  //         method: "GET",
+  //         headers: {
+  //           "Content-Type": "application/json",
+  //         },
+  //       }
+  //     )
+  //       .then((res) => res.json())
+  //       .then((data) => {
+  //         console.log(data);
+  //         setData(data);
+  //       })
+  //       .catch((err) => console.log(err));
+  //   }
+  // };
   // const handleSlideChangeTransitionEnd = () => {
   //   if (swiper) {
   //     swiper.autoplay.start();
   //   }
   // };
-  React.useLayoutEffect(() => {
-    fetchData();
-  }, [product_data]);
+  // React.useLayoutEffect(() => {
+  //   fetchData();
+  // }, [product_data]);
 
   const breakpoints = {
     // when window width is >= 320px
@@ -93,7 +93,6 @@ const DOD = () => {
       breakpoints={breakpoints}
       slidesPerView={6}
       autoplay={true}
-      // onSlideChangeTransitionEnd={handleSlideChangeTransitionEnd}
       onSlideChange={() => console.log("slide change")}
       onSwiper={setSwiper}
     >

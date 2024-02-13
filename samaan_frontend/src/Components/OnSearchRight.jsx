@@ -1,7 +1,6 @@
 import React from "react";
-import "./OnSearchRight.css";
 import ProductCardTwo from "./ProductCardTwo";
-import { SkeletonCardTwo } from "./Skeletons/Skeletons";
+import { SkeletonCardTwo } from "./Skeletons";
 
 const OnSearchRight = ({ data }) => {
   return (
