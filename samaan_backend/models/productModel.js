@@ -3,7 +3,7 @@ const { sequelize } = require("./index");
 const categoryModel = require("./categoryModel");
 
 const productModel = sequelize.define(
-  "Product",
+  "Products",
   {
     productId: {
       type: DataTypes.INTEGER,

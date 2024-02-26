@@ -8,5 +8,5 @@ const sequelize = new Sequelize({
   database: process.env.DATABASE,
 });
 
-sequelize.sync()
-module.exports = {sequelize};
+sequelize.sync();
+module.exports = { sequelize };

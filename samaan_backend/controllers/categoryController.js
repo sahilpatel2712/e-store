@@ -11,7 +11,6 @@ module.exports = {
     }
   },
   addCategory: async (req, res, next) => {
-    console.log("heel");
     try {
       const { categoryName, categoryImage } = req.body;
       const newCategory = await categoryModel.create({

@@ -1,37 +1,43 @@
 const bcrypt = require("bcrypt");
+const { validationResult } = require("express-validator");
 const jwt = require("jsonwebtoken");
 const UserModel = require("../models/userModel");
 
 module.exports = {
   userRegistration: async (req, res, next) => {
-    try {
-      const { name, email, password, address } = req.body;
+    let errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      res.status(400).send(errors.array());
+    } else {
+      try {
+        const { name, email, password, address } = req.body;
 
-      const hashedPassword = await bcrypt.hash(
-        password,
-        Number(process.env.SALT)
-      );
+        const hashedPassword = await bcrypt.hash(
+          password,
+          Number(process.env.SALT)
+        );
 
-      const newUser = await UserModel.create({
-        name,
-        email,
-        password: hashedPassword,
-        address,
-      });
+        const newUser = await UserModel.create({
+          name,
+          email,
+          password: hashedPassword,
+          address,
+        });
 
-      const token = jwt.sign(
-        { userId: newUser.userId, email: newUser.email },
-        process.env.JWT_SECRET
-      );
+        const token = jwt.sign(
+          { userId: newUser.userId, email: newUser.email },
+          process.env.JWT_SECRET
+        );
 
-      res.status(201).json({
-        message: "User Register Successfully",
-        authToken: token,
-        data: { userName: newUser.name, email: newUser.email },
-      });
-    } catch (error) {
-      console.error("Error registering user:", error);
-      res.status(500).json({ error: "Internal Server Error" });
+        res.status(201).json({
+          message: "User Register Successfully",
+          authToken: token,
+          data: { userName: newUser.name, email: newUser.email },
+        });
+      } catch (error) {
+        console.error("Error registering user:", error);
+        res.status(500).json({ error: "Internal Server Error" });
+      }
     }
   },
   userLogin: async (req, res, next) => {

@@ -4,7 +4,6 @@ module.exports = {
   getProduct: async (req, res, next) => {
     try {
       const products = await productModel.findAll();
-      console.log(products);
       res.json(products);
     } catch (error) {
       res.status(500).json({ error: "Internal Server Error" });
@@ -72,7 +71,6 @@ module.exports = {
           where: { productId: productId },
         }
       );
-
       if (updatedRowsCount === 0) {
         return res.status(404).json({ error: "Product not found" });
       }

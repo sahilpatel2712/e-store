@@ -2,7 +2,7 @@ const { DataTypes } = require("sequelize");
 const { sequelize } = require("./index");
 
 const UserModel = sequelize.define(
-  "User",
+  "Users",
   {
     userId: {
       type: DataTypes.INTEGER,
