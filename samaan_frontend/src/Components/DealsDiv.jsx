@@ -7,7 +7,7 @@ import "swiper/css/scrollbar";
 import AuthContext from "../context/Auth";
 import { SkeletonCardTwo } from "./Skeletons";
 
-const DealsDiv = ({ category }) => {
+const DealsDiv = ({ category, categoryId }) => {
   const [swiper, setSwiper] = React.useState(null);
   const [data, setData] = React.useState();
   // const { authTokens } = React.useContext(AuthContext);
@@ -53,26 +53,25 @@ const DealsDiv = ({ category }) => {
   // }, []);
 
   const breakpoints = {
-    // when window width is >= 320px
     320: {
       slidesPerView: 1,
     },
-    // when window width is >= 480px
+
     480: {
       slidesPerView: 2,
       spaceBetween: 20,
     },
-    // when window width is >= 640px
+
     640: {
       slidesPerView: 3,
       spaceBetween: 30,
     },
-    // when window width is >= 768px
+
     768: {
       slidesPerView: 3,
       spaceBetween: 40,
     },
-    // when window width is >= 1024px
+
     1024: {
       slidesPerView: 6,
     },
@@ -112,7 +111,17 @@ const DealsDiv = ({ category }) => {
                 key={id}
                 style={{ display: "flex", justifyContent: "center" }}
               >
-                <SkeletonCardTwo />
+                {/* <SkeletonCardTwo /> */}
+                <ProductCardTwo
+                  key={id}
+                  name={item.name}
+                  price={item.price}
+                  imgSrc={item.img_path}
+                  weight={item.weight}
+                  category={category}
+                  productId={item.id}
+                  cartQuantity={item.quantity}
+                />
               </SwiperSlide>
             );
           })}

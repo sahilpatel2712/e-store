@@ -146,7 +146,6 @@ const CartCard = ({
                     onClick={() => {
                       if (quantity > 0) {
                         setQuantity(quantity - 1);
-                        //  handleChangeQuantity(-1);
                         changeQuantity(-price);
                         handleChangeQuantity(-1);
                       } else {
@@ -167,7 +166,6 @@ const CartCard = ({
                     className="bg-yellow-300  text-cent er font-[900] text-green-800  rounded-full cursor-pointer QuantityIcon pillsMobile"
                     onClick={() => {
                       setQuantity(quantity + 1);
-                      //  handleChangeQuantity(1);
                       changeQuantity(price);
                       handleChangeQuantity(1);
                     }}

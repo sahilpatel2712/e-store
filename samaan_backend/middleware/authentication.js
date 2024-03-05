@@ -15,7 +15,7 @@ const authenticateUser = async (req, res, next) => {
     if (!user) {
       return res.status(401).json({ error: "Unauthorized: Invalid token" });
     }
-
+    req.user = user.toJSON();
     next();
   } catch (error) {
     console.error("Error authenticating user:", error);
@@ -23,4 +23,4 @@ const authenticateUser = async (req, res, next) => {
   }
 };
 
-module.exports = {authenticateUser};
+module.exports = { authenticateUser };

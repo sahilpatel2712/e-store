@@ -1,7 +1,7 @@
 const { DataTypes } = require("sequelize");
 const { sequelize } = require("./index");
 
-const categoryModel = sequelize.define("Categories", {
+const CategoryModel = sequelize.define("Categories", {
   categoryId: {
     type: DataTypes.INTEGER,
     primaryKey: true,
@@ -16,4 +16,4 @@ const categoryModel = sequelize.define("Categories", {
     allowNull: false,
   },
 });
-module.exports = categoryModel;
+module.exports = CategoryModel;

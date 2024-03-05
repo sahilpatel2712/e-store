@@ -6,9 +6,12 @@ import { ErrorMessage, Field, Form, Formik } from "formik";
 import { loginInitialValues } from "../../modules/formik/initialValues";
 import { loginValidationSchema } from "../../modules/formik/validationSchema";
 import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { userLog } from "../../redux/reducers/auth";
 
 const Login = () => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   //   const [forgotPasswordForm, setForgotPasswordForm] = React.useState(false);
 
   //   const handleLogin = async (e) => {
@@ -30,6 +33,11 @@ const Login = () => {
   //       });
   //   };
 
+  const handleLogin = async (value) => {
+    dispatch(userLog(value));
+    navigate("/");
+  };
+
   return (
     <div className="w-[100%] h-[21rem] flex justify-center items-center ">
       <div className="w-[100%] md:w-[80%] h-[21rem] flex justify-center items-center flex-col ">
@@ -43,7 +51,7 @@ const Login = () => {
           <Formik
             initialValues={loginInitialValues}
             validationSchema={loginValidationSchema}
-            onSubmit={(val) => console.log(val)}
+            onSubmit={handleLogin}
           >
             <Form className="w-[100%]">
               <div className="w-[100%] h-[100%] flex justify-center items-center ">

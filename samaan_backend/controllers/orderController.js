@@ -1,4 +1,4 @@
-const orderModel = require("../models/orderModel");
+const OrderModel = require("../models/order");
 
 module.exports = {
   getOrderDetails: async (req, res, next) => {
@@ -8,11 +8,11 @@ module.exports = {
       let orders;
 
       if (orderId) {
-        orders = await orderModel.findAll({ where: { orderId: orderId } });
+        orders = await OrderModel.findAll({ where: { orderId: orderId } });
       } else if (userId) {
-        orders = await orderModel.findAll({ where: { userId: userId } });
+        orders = await OrderModel.findAll({ where: { userId: userId } });
       } else {
-        orders = await orderModel.findAll();
+        orders = await OrderModel.findAll();
       }
 
       if (orders.length === 0) {
@@ -31,7 +31,7 @@ module.exports = {
       const { userId, productId, categoryId, orderInfo, orderAddress } =
         req.body;
 
-      const newOrder = await orderModel.create({
+      const newOrder = await OrderModel.create({
         userId,
         productId,
         categoryId,

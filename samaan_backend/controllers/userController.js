@@ -11,12 +11,10 @@ module.exports = {
     } else {
       try {
         const { name, email, password, address } = req.body;
-
         const hashedPassword = await bcrypt.hash(
           password,
           Number(process.env.SALT)
         );
-
         const newUser = await UserModel.create({
           name,
           email,
@@ -32,7 +30,7 @@ module.exports = {
         res.status(201).json({
           message: "User Register Successfully",
           authToken: token,
-          data: { userName: newUser.name, email: newUser.email },
+          userData: newUser,
         });
       } catch (error) {
         console.error("Error registering user:", error);
@@ -59,10 +57,43 @@ module.exports = {
         process.env.JWT_SECRET
       );
 
-      res.status(200).json({ user, token });
+      res.status(200).json({
+        message: "User Login Successfully",
+        authToken: token,
+        userData: user,
+      });
     } catch (error) {
       console.error("Error logging in user:", error);
       res.status(500).json({ error: "Internal Server Error" });
+    }
+  },
+  authorization: async (req, res, next) => {
+    try {
+      const token = req.headers.authorization;
+
+      if (!token) {
+        return res
+          .status(401)
+          .json({ error: "Unauthorized: No token provided" });
+      }
+
+      const decoded = jwt.verify(token, process.env.JWT_SECRET);
+
+      const user = await UserModel.findOne({
+        where: { userId: decoded.userId },
+      });
+      if (!user) {
+        return res.status(401).json({ error: "Unauthorized: Invalid token" });
+      }
+
+      res.status(200).json({
+        message: "User Login Successfully",
+        authToken: token,
+        userData: user.toJSON(),
+      });
+    } catch (error) {
+      console.error("Error authenticating user:", error);
+      return res.status(500).json({ error: "Internal Server Error" });
     }
   },
 };

@@ -5,14 +5,15 @@ import ToggleIcon from "../aseets/icons/ToggleIcon";
 import CloseIcon from "../aseets/icons/CloseIcon";
 import SearchIcon from "../aseets/icons/SearchIcon";
 import CartIcon from "../aseets/icons/CartIcon";
-
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
-// import AuthContext from "../context/Auth";
-const Header = () => {
-  // const { authTokens, logoutUser } = React.useContext(AuthContext);
+import { useDispatch, useSelector } from "react-redux";
+import { userOut } from "../redux/reducers/auth";
 
-  const [userDetails, setUserDetails] = useState();
+const Header = () => {
+  const auth = useSelector((state) => state.auth);
+  // const [userDetails, setUserDetails] = useState();
+  const dispatch = useDispatch();
   const popOverDiv = useRef(null);
   const popOverRef = useRef(null);
   const [popover, setPopOver] = useState(false);
@@ -133,12 +134,14 @@ const Header = () => {
   const handlePopOver = () => {
     setPopOver(!popover);
   };
+  const handleLogOut = () => {
+    window.location.reload();
+    dispatch(userOut());
+  };
 
   useEffect(() => {
-    // Add event listener for window resize
     window.addEventListener("resize", handleWindowResize);
 
-    // Clean up the event listener when the component unmounts
     return () => {
       window.removeEventListener("resize", handleWindowResize);
     };
@@ -217,9 +220,9 @@ const Header = () => {
           </div>
         </div>
         <div className="UpperLastDiv VCenter-flex">
-          {userDetails ? (
+          {auth.user ? (
             <p className="DisappearMobile">
-              {false ? `Welcome,${userDetails["name"]}` : ""}
+              {false ? `Welcome,${auth.user.name}` : ""}
             </p>
           ) : (
             <div
@@ -238,7 +241,7 @@ const Header = () => {
           <div className="flex items-center justify-center ProfileDiv VCenter-flex">
             <div
               className={`NavImageWrapper Profilesvg bg-yellow-300 rounded-2xl  w-[3rem] h-[3rem]  hover:shadow-md transition-all duration-500  ease-in-out ${
-                userDetails ? "flex" : "hidden"
+                auth.user ? "flex" : "hidden"
               } justify-center items-center cursor-pointer `}
               onClick={handlePopOver}
               onBlur={handleBlur}
@@ -257,19 +260,14 @@ const Header = () => {
             >
               <ul>
                 <li className="UserNamePopOver">
-                  <p>{userDetails ? `${userDetails["name"]}` : ""}</p>
+                  <p>{auth.user ? `${auth.user.name}` : ""}</p>
                 </li>
                 <li className="UserNamePopOver">
                   <Link to={"/forgotPassword"}>Change Password</Link>
                 </li>
 
                 <li className="PopoverLine">
-                  <div
-                    onClick={() => {
-                      // logoutUser();
-                      window.location.reload();
-                    }}
-                  >
+                  <div onClick={handleLogOut}>
                     <LogoutIcon />
                     Logout
                   </div>

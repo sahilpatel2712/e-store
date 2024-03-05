@@ -1,7 +1,7 @@
 const { DataTypes } = require("sequelize");
 const { sequelize } = require("./index");
 
-const orderModel = sequelize.define(
+const OrderModel = sequelize.define(
   "Orders",
   {
     orderId: {
@@ -45,7 +45,7 @@ const orderModel = sequelize.define(
   {
     hooks: {
       beforeCreate: async (order, options) => {
-        const lastOrder = await orderModel.findOne({
+        const lastOrder = await OrderModel.findOne({
           order: [["orderId", "DESC"]],
         });
         if (lastOrder) {
@@ -58,4 +58,4 @@ const orderModel = sequelize.define(
   }
 );
 
-module.exports = orderModel;
+module.exports = OrderModel;

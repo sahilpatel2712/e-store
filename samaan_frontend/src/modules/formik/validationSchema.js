@@ -29,10 +29,7 @@ export const signupValidationSchema = Yup.object({
     )
     .required("Required"),
   confirmPassword: Yup.string()
-    .matches(
-      /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()_+]).{8,}$/,
-      "Enter strong password"
-    )
+    .oneOf([Yup.ref("password"), null], "Passwords must match")
     .required("Required"),
   name: Yup.string().required("Required"),
   address: Yup.string().required("Required"),

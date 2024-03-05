@@ -1,9 +1,9 @@
-const categoryModel = require("../models/categoryModel");
+const CategoryModel = require("../models/category");
 
 module.exports = {
   getCategory: async (req, res, next) => {
     try {
-      const categories = await categoryModel.findAll();
+      const categories = await CategoryModel.findAll();
       res.json(categories);
     } catch (error) {
       console.error("Error getting categories:", error);
@@ -13,7 +13,7 @@ module.exports = {
   addCategory: async (req, res, next) => {
     try {
       const { categoryName, categoryImage } = req.body;
-      const newCategory = await categoryModel.create({
+      const newCategory = await CategoryModel.create({
         categoryName,
         categoryImage,
       });
@@ -28,7 +28,7 @@ module.exports = {
       const categoryId = req.params.categoryId;
       const { categoryName, categoryImage } = req.body;
 
-      const [updatedRowsCount, updatedRows] = await categoryModel.update(
+      const [updatedRowsCount, updatedRows] = await CategoryModel.update(
         { categoryName, categoryImage },
         { where: { categoryId: categoryId } }
       );
@@ -37,7 +37,7 @@ module.exports = {
         return res.status(404).json({ error: "Category not found" });
       }
 
-      const updatedCategory = await categoryModel.findOne({
+      const updatedCategory = await CategoryModel.findOne({
         where: { categoryId: categoryId },
       });
       res.json(updatedCategory);
@@ -50,7 +50,7 @@ module.exports = {
     try {
       const categoryId = req.params.categoryId;
 
-      const deletedRowCount = await categoryModel.destroy({
+      const deletedRowCount = await CategoryModel.destroy({
         where: { categoryId: categoryId },
       });
 

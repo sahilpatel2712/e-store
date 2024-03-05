@@ -14,23 +14,23 @@ const ProductCardTwo = ({
     cartQuantity !== undefined ? cartQuantity : 0
   );
   const navigate = useNavigate();
-  const { authTokens } = React.useContext(AuthContext);
+  // const { authTokens } = React.useContext(AuthContext);
   const changeQuantity = async (q) => {
-    if (authTokens["access"]) {
-      const response = await fetch(
-        "https://api-krudra9125-gmailcom.vercel.app/api/cart/",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${authTokens["access"]}`,
-          },
-          body: JSON.stringify({ product: productId, quantity: q }),
-        }
-      );
-      const data = await response.json();
-      console.log(data);
-    }
+    // if (authTokens["access"]) {
+    //   const response = await fetch(
+    //     "https://api-krudra9125-gmailcom.vercel.app/api/cart/",
+    //     {
+    //       method: "POST",
+    //       headers: {
+    //         "Content-Type": "application/json",
+    //         Authorization: `Bearer ${authTokens["access"]}`,
+    //       },
+    //       body: JSON.stringify({ product: productId, quantity: q }),
+    //     }
+    //   );
+    //   const data = await response.json();
+    //   console.log(data);
+    // }
   };
 
   return (
@@ -38,7 +38,7 @@ const ProductCardTwo = ({
       <div class="Card shadow-lg  ">
         <div class="CardImage">
           <Link to={`/product/${productId}`}>
-            <img className="imageclass" src={`${imgSrc}`} alt="" />
+            <img className="imageclass" src="https://media.istockphoto.com/id/517109442/photo/chocolate-chip-cookie-isolated.jpg?s=612x612&w=0&k=20&c=RgZOYwzVRTXnIBy8zSkXK-wJfNBy9w023UGULkbH_VE=" alt="" />
           </Link>
         </div>
         <div class="contentOuter">
@@ -114,12 +114,12 @@ const ProductCardTwo = ({
                 ) : (
                   <button
                     onClick={() => {
-                      if (authTokens) {
-                        setQuantity(quantity + 1);
-                        changeQuantity(1);
-                      } else {
-                        navigate("/signup");
-                      }
+                      // if (authTokens) {
+                      //   setQuantity(quantity + 1);
+                      //   changeQuantity(1);
+                      // } else {
+                      //   navigate("/signup");
+                      // }
                     }}
                   >
                     ADD

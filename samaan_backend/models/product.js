@@ -1,8 +1,8 @@
 const { DataTypes } = require("sequelize");
 const { sequelize } = require("./index");
-const categoryModel = require("./categoryModel");
+const CategoryModel = require("./category");
 
-const productModel = sequelize.define(
+const ProductModel = sequelize.define(
   "Products",
   {
     productId: {
@@ -25,13 +25,24 @@ const productModel = sequelize.define(
     productSupplyNumber: {
       type: DataTypes.INTEGER,
       allowNull: false,
-
+    },
+    productWeight: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
+    productDescription: {
+      type: DataTypes.STRING,
+      allowNull: true,
+    },
+    productFlavour: {
+      type: DataTypes.STRING,
+      allowNull: true,
     },
   },
   {
     hooks: {
       beforeCreate: async (product, options) => {
-        const lastProduct = await productModel.findOne({
+        const lastProduct = await ProductModel.findOne({
           order: [["productId", "DESC"]],
         });
         if (lastProduct) {
@@ -44,6 +55,10 @@ const productModel = sequelize.define(
   }
 );
 
-productModel.belongsTo(categoryModel, { foreignKey: "categoryId" });
+ProductModel.belongsTo(CategoryModel, {
+  foreignKey: "categoryId",
+  onDelete: "CASCADE",
+  onUpdate: "CASCADE",
+});
 
-module.exports = productModel;
+module.exports = ProductModel;

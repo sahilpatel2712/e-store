@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Navigation from "./router/Navigation";
 
 import "./styles/input.css";
@@ -19,10 +19,15 @@ import "./styles/onSearchLeft.css";
 import "./styles/onSearchRight.css";
 import "./styles/header.css";
 
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { userAuth } from "./redux/reducers/auth";
+import { getProductByCategory } from "./redux/reducers/product";
+import { getCategory } from "./redux/reducers/categories";
 
 const App = () => {
-  const { isAuthenticated } = useSelector((state) => state.auth);
+  const { token } = useSelector((state) => state.auth);
+  const { productsData } = useSelector((state) => state.products);
+  const dispatch = useDispatch();
   // const [cart, setCart] = React.useState([]);
   // const { authTokens } = React.useContext(AuthContext);
   // const fetchCart = async () => {
@@ -46,6 +51,15 @@ const App = () => {
   // React.useEffect(() => {
   //   fetchCart();
   // }, [authTokens]);
+
+  useEffect(() => {
+    if (token) {
+      dispatch(userAuth({ token: token }));
+    }
+    dispatch(getCategory());
+    // dispatch(getProductByCategory(1));
+  }, []);
+
   return (
     <div className="  w-[100%] h-[100vh]   ">
       {/* <CartContext.Provider value={cart}> */}

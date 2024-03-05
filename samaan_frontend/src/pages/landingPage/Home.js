@@ -4,8 +4,10 @@ import DOD from "../../Components/DOD";
 import ProductsDiv from "../../Components/ProductsDiv";
 
 import { IoIosArrowForward } from "react-icons/io";
+import { useSelector } from "react-redux";
 
 const Home = () => {
+  const { categoriesData } = useSelector((state) => state.categories);
   // const [product_data, setProductData] = React.useState(null);
   // useLayoutEffect(() => {
   //   const fetchData = async () => {
@@ -49,13 +51,12 @@ const Home = () => {
         </div>
       </div>
 
-      <ProductsDiv title={"Dairy,Bread&Eggs"} Category="dairy" />
-
-      <ProductsDiv title={"Namkeens"} Category="Biscuits" />
-
-      <ProductsDiv title={"Namkeens"} Category="Namkeens" />
-
-      <ProductsDiv title={"Munchies"} Category="snacks" />
+      {categoriesData.map((item) => (
+        <ProductsDiv
+          Category={item.categoryName}
+          categoryId={item.categoryId}
+        />
+      ))}
     </div>
   );
 };

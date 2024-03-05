@@ -6,39 +6,16 @@ import { ErrorMessage, Field, Form, Formik } from "formik";
 import { signupInitialValues } from "../../modules/formik/initialValues";
 import { signupValidationSchema } from "../../modules/formik/validationSchema";
 import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { userCreate } from "../../redux/reducers/auth";
 
 const SignUp = ({ setLogInForm }) => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const handleSignup = (value) => {
-    console.log(value);
-    // const email = e.target[0].value;
-    // const name = e.target[1].value;
-    // const address = e.target[4].value;
-    // if (password === password2) {
-    //   fetch("https://api-krudra9125-gmailcom.vercel.app/api/register/", {
-    //     method: "POST",
-    //     headers: { "Content-Type": "application/json" },
-    //     body: JSON.stringify({
-    //       email: email,
-    //       password: password,
-    //       password2: password,
-    //       tc: "True",
-    //       name: name,
-    //       address: address,
-    //     }),
-    //   })
-    //     .then((res) => res.json())
-    //     .then((data) => {
-    //       if (data["message"]) {
-    //         console.log(data);
-    //       } else {
-    //         alert("EMAIL already exist");
-    //       }
-    //     });
-    // } else {
-    //   alert("PASSWORD DOES NOT MATCH");
-    // }
+    dispatch(userCreate(value));
+    navigate("/")
   };
 
   return (
@@ -56,7 +33,7 @@ const SignUp = ({ setLogInForm }) => {
           <Formik
             initialValues={signupInitialValues}
             validationSchema={signupValidationSchema}
-            onSubmit={(val) => console.log(val)}
+            onSubmit={handleSignup}
           >
             <Form className="w-[90%] md:w-[70%]">
               <div className="w-[100%] h-[3rem] flex justify-center items-center ">
@@ -83,7 +60,7 @@ const SignUp = ({ setLogInForm }) => {
                 height="3rem"
                 placeholder="Confirm Password"
               />
-              <ErrorMessage name="password2" component={TextError} />
+              <ErrorMessage name="confirmPassword" component={TextError} />
               <div className="w-[100%] h-[3rem] flex justify-center items-center ">
                 <Field
                   className="w-[100%] h-[2.5rem] border border-black rounded-lg pl-2"
