@@ -15,11 +15,9 @@ const productReducer = createSlice({
 
 const { setProduct } = productReducer.actions;
 
-export const getProductByCategory = (categoryId) => {
+export const getProduct = () => {
   return async (dispatch) => {
-    let response = await axios.get(
-      `http://127.0.0.1:5000/api/v1/products/${categoryId}`
-    );
+    let response = await axios.get("http://127.0.0.1:5000/api/v1/products");
     dispatch(setProduct(response.data));
   };
 };

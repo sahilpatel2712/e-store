@@ -1,5 +1,6 @@
 const { DataTypes } = require("sequelize");
 const { sequelize } = require("./index");
+const UserModel = require("./userModel");
 
 const OrderModel = sequelize.define(
   "Orders",
@@ -13,32 +14,16 @@ const OrderModel = sequelize.define(
       type: DataTypes.STRING,
       allowNull: false,
     },
-    userId: {
+    total: {
       type: DataTypes.INTEGER,
       allowNull: false,
-      references: {
-        model: "Users",
-        key: "userId",
-      },
-    },
-    productId: {
-      type: DataTypes.INTEGER,
-      allowNull: false,
-      references: {
-        model: "Products",
-        key: "productId",
-      },
-    },
-    categoryId: {
-      type: DataTypes.INTEGER,
-      allowNull: false,
-      references: {
-        model: "Categories",
-        key: "categoryId",
-      },
     },
     orderInfo: {
       type: DataTypes.JSON,
+      allowNull: false,
+    },
+    status: {
+      type: DataTypes.ENUM("ORDERED", "SHIPPED", "DELIVERED"),
       allowNull: false,
     },
   },
@@ -57,5 +42,11 @@ const OrderModel = sequelize.define(
     },
   }
 );
+
+OrderModel.belongsTo(UserModel, {
+  foreignKey: "userId",
+  onDelete: "CASCADE",
+  onUpdate: "CASCADE",
+});
 
 module.exports = OrderModel;

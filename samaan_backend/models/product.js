@@ -22,6 +22,10 @@ const ProductModel = sequelize.define(
       type: DataTypes.STRING,
       allowNull: false,
     },
+    productImageId: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
     productSupplyNumber: {
       type: DataTypes.INTEGER,
       allowNull: false,
@@ -31,7 +35,7 @@ const ProductModel = sequelize.define(
       allowNull: false,
     },
     productDescription: {
-      type: DataTypes.STRING,
+      type: DataTypes.TEXT,
       allowNull: true,
     },
     productFlavour: {

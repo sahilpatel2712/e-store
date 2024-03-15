@@ -1,0 +1,48 @@
+<form id="crud-frm" method="post" action="/admin/categories/save/<%= data === null ? 0 : data.categoryId %>"
+    autocomplete="off" enctype="multipart/form-data" >
+    <div class="row">
+        <div class="col-lg-12 col-12">
+            <div class="card card-info card-outline">
+                <div class="card-header">
+                    <h3 class="card-title">
+                        <%= title %>
+                    </h3>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Category Name</label>
+                                <input type="text" class="form-control" name="categoryName"
+                                    value="<%= data != null ? data['categoryName'] : '' %>" required />
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label>Image URL</label>
+                                
+                                <input class="form-control" id="formFile" type="file" name="categoryImage" />
+                            </div>
+                        </div>
+    
+                    
+                    </div>
+                </div>
+
+            
+
+                <div class="card-footer">
+                    <button type="submit" class="btn btn-info">
+                        <%= data==null ? 'Add' : 'Update' %>
+                    </button>
+                    <a href="/admin/categories"><button type="button" class="btn btn-default ml-2">
+                            Cancel
+                        </button></a>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>

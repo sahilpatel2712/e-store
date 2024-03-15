@@ -1,0 +1,47 @@
+<div class="row">
+    <div class="col-lg-12 col-12">
+        <div class="card card-info card-outline">
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-12">
+                        <table id="crud-table" class="table table-bordered table-striped dataTable">
+                            <thead>
+                                <tr role="row">
+                                    <th>User Id</th>
+                                    <th>Name</th>
+                                    <th>Email</th>
+                                    <th>Product Name</th>
+                                    <th>Product Image</th>
+                                    <th>Price per Item</th>
+                                    <th>Quantity</th>
+                                    <th>Weight</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <% items.forEach((item) => { %>
+                                    <tr>
+                                        <td><%= item.userId %></td>
+                                        <td><%= item.User.name %></td>
+                                        <td><%= item.User.email %></td>
+                                        <td><%= item.Product.productName %></td>
+                                        <td><img src="<%= item.Product.productImage %>" alt="Product Image" style="max-width: 100px; max-height: 100px;"></td>
+                                        <td><%= item.Product.productPrice %></td>
+                                        <td><%= item.quantity %></td>
+                                        <td><%= item.Product.productWeight %></td>
+                                        <td>
+                                            <div class="btn-group-sm">
+                                                <a href="/admin/carts/form/<%= item.cartId %>" title="Edit" class="btn btn-info btn-xs"><i class="fas fa-edit"></i></a>
+                                                <button  onclick="handleAlert('/admin/carts/delete/<%= item.cartId %>')" class="btn btn-danger delete"><i class="fas fa-trash"></i></button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                <% }) %>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,52 @@
+<div class="row">
+  <div class="col-lg-12 col-12">
+    <div class="card card-info card-outline">
+      <div class="card-header">
+        <h3 class="card-title">List of Feedbacks</h3>
+  
+      </div>
+      <div class="card-body">
+        <div class="row">
+          <div class="col-md-12">
+            <table
+              id="crud-table"
+              class="table table-bordered table-striped dataTable"
+            >
+              <thead>
+                <tr role="row">
+                  <th>Product Name</th>
+                  <th>User Id</th>
+                  <th>Rating</th>
+                  <th>Review</th>
+                  <th>Action</th>
+
+                </tr>
+              </thead>
+              <tbody>
+                <% items.forEach((item) => { %>
+                <tr>
+                  <td><%= item.productName %></td>
+             
+                  <td><%= item.userId %></td>
+                  <td><%= item.ratings %></td>
+                  <td><%= item.reviews %></td>
+                  <td>
+                    <div class="btn-group-sm">
+                      <button
+                        onclick="handleAlert('/admin/feedbacks/delete/<%= item.feedbackId %>')"
+                        class="btn btn-danger delete"
+                      >
+                        <i class="fas fa-trash"></i>
+                      </button>
+                    </div>
+                  </td>
+                </tr>
+                <% }) %>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

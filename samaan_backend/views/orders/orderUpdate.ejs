@@ -1,0 +1,84 @@
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-body table-responsive p-0" style="height: 300px;">
+                <table class="table  text-nowrap text-center">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Item</th>
+                            <th>Name</th>
+                            <th>Attribute</th>
+                            <!-- <th>Quantity</th> -->
+                            <th>Price</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <% items.forEach(item=> { %>
+                            <tr>
+                                <td>
+                                    <%= item.productId %>
+                                </td>
+                                <td><img style="height: 100px;" src="<%= item.productImage %>" alt="product" /></td>
+                                <td>
+                                    <%= item.productName %>
+                                </td>
+                                <td>
+                                    <div>
+                                        <p><span style="font-weight:bold;color: #6e6c6c;">Weight</span> : <span
+                                                style="font-weight:bold;color: #333;">
+                                                <%= item.productWeight %>
+                                            </span></p>
+                                    </div>
+                                </td>
+
+                                <td>
+                                    <%= item.productPrice %>
+                                </td>
+                            </tr>
+
+                            <% }); %>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="form-group w-25 d-flex m-3" style="gap: 30px;align-items:baseline;">
+                <label>Status</label>
+                <select class="custom-select" id="statusSelect">
+                    <option value="ORDERED" <%=status==='ORDERED' ?'selected':'' %>>ORDERED</option>
+                    <option value="SHIPPED" <%=status==='SHIPPED' ?'selected':'' %>>SHIPPED</option>
+                    <option value="DELIVERED" <%=status==='DELIVERED' ?'selected':'' %>>DELIVERED</option>
+                </select>
+            </div>
+
+
+            <div class="card-footer">
+                <button type="button" class="btn btn-info" onclick="handleUpdate()">
+                    Update
+                </button>
+                <a href="/admin/orders"><button type="button" class="btn btn-default ml-2">
+                        Cancel
+                    </button></a>
+            </div>
+
+        </div>
+
+    </div>
+</div>
+<script>
+    function handleUpdate() {
+        var orderId = '<%= orderId %>';
+        var selectedStatus = document.getElementById('statusSelect').value;
+        var xhr = new XMLHttpRequest();
+        xhr.open('POST', '/admin/orders/save/' + orderId, true);
+        xhr.setRequestHeader('Content-Type', 'application/json');
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState === XMLHttpRequest.DONE) {
+                if (xhr.status === 200) {
+                    window.location.href = '/admin/orders';
+                }
+            }
+        };
+        xhr.send(JSON.stringify({ status: selectedStatus }));
+    };
+</script>

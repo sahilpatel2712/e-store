@@ -1,0 +1,53 @@
+<div class="row">
+    <div class="col-lg-12 col-12">
+        <div class="card card-info card-outline">
+            <div class="card-header">
+                <h3 class="card-title">List of Products</h3>
+                <div class="card-tools">
+                    <a href="/admin/products/form/0"><button type="button" class="btn btn-info btn-sm ml-3 ">Add New</button></a>
+                </div>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-12">
+                        <table id="crud-table" class="table table-bordered table-striped dataTable">
+                            <thead>
+                                <tr role="row">
+                                    <th>Name</th>
+                                    <th>Price</th>
+                                    <th>Image</th>
+                                    <th>Category</th>
+                                    <th>Supply Number</th>
+                                    <th>Weight</th>
+                                    <th>Description</th>
+                                    <th>Flavour</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <% items.forEach((item) => { %>
+                                    <tr>
+                                        <td><%= item.productName %></td>
+                                        <td><%= item.productPrice %></td>
+                                        <td><img src="<%= item.productImage %>" alt="Product Image" style="max-width: 100px; max-height: 100px;"></td>
+                                        <td><%= item.Category.categoryName %></td>
+                                        <td><%= item.productSupplyNumber %></td>
+                                        <td><%= item.productWeight %></td>
+                                        <td><%= item.productDescription %></td>
+                                        <td><%= item.productFlavour %></td>
+                                        <td>
+                                            <div class="btn-group-sm">
+                                                <a href="/admin/products/form/<%= item.productId %>" title="Edit" class="btn btn-info btn-xs"><i class="fas fa-edit"></i></a>
+                                                <button  onclick="handleAlert('/admin/products/delete/<%= item.productId %>')" class="btn btn-danger delete"><i class="fas fa-trash"></i></button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                <% }) %>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

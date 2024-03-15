@@ -1,0 +1,63 @@
+<aside class="main-sidebar elevation-4 sidebar-dark-info">
+    <a href="javascript:;" class="brand-link text-center">
+        <img src="/assets/dist/img/AdminLTELogo.png" class="brand-image img-circle elevation-3" />
+        <span class="brand-text font-weight-bold" style="font-size: larger;" >eGrocer</span>
+    </a>
+    <div class="sidebar">
+        <div class="user-panel mt-3 pb-3 mb-3 d-flex">
+            <div class="image">
+                <img src="/assets/dist/img/admin_profile.png" class="img-circle elevation-2 bg-light" alt="User Image" />
+            </div>
+            <div class="info">
+                <a href="javascript:;" class="d-block"><%= admin.userName %></a>
+            </div>
+        </div>
+        <nav class="mt-2">
+            <ul class="nav nav-pills nav-sidebar flex-column nav-compact nav-child-indent" data-widget="treeview"
+                role="menu" data-accordion="false">
+                <li class="nav-item">
+                    <a href="/admin/dashboard" class="nav-link <%= route ==='dashboard' ? 'active' : '' %>">
+                        <i class="nav-icon fas fa-tachometer-alt"></i>
+                        <p>Dashboard</p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="/admin/users" class="nav-link <%= route ==='users' ? 'active' : '' %>">
+                        <i class="nav-icon fa fa-users"></i>
+                        <p>Users</p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="/admin/products" class="nav-link <%= route ==='products' ? 'active' : '' %>">
+                        <i class="nav-icon fa fa-circle"></i>
+                        <p>Products</p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="/admin/categories" class="nav-link <%= route ==='category' ? 'active' : '' %>">
+                        <i class="nav-icon fa  fa-layer-group "></i>
+                        <p>Category</p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="/admin/orders" class="nav-link <%= route ==='order' ? 'active' : '' %>">
+                        <i class="nav-icon fa  fa-box-open "></i>
+                        <p>Orders</p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="/admin/carts" class="nav-link <%= route ==='cart' ? 'active' : '' %>">
+                        <i class="nav-icon fa fa-shopping-cart"></i>
+                        <p>Carts</p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="/admin/feedbacks" class="nav-link <%= route ==='feedback' ? 'active' : '' %>">
+                        <i class="nav-icon fa  fa-comments "></i>
+                        <p>Feedbacks</p>
+                    </a>
+                </li>
+            </ul>
+        </nav>
+    </div>
+</aside>

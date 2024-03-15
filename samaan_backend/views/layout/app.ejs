@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title><%= title %></title>
+    <link
+      type="text/css"
+      rel="stylesheet"
+      href="/assets/plugins/fontawesome-free/css/all.min.css"
+    />
+    <link
+      type="text/css"
+      rel="stylesheet"
+      href="//code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css"
+    />
+    <!-- <link type="text/css" rel="stylesheet" href="/assets/plugins/icheck-bootstrap/icheck-bootstrap.min.css"> -->
+    <!-- <link type="text/css" rel="stylesheet" href="/assets/plugins/select2/css/select2.min.css"> -->
+    <!-- <link type="text/css" rel="stylesheet" href="/assets/plugins/bootstrap4-duallistbox/bootstrap-duallistbox.min.css"> -->
+    <link
+      type="text/css"
+      rel="stylesheet"
+      href="/assets/dist/css/adminlte.css"
+    />
+    <!-- <link type="text/css" rel="stylesheet" href="/assets/plugins/overlayScrollbars/css/OverlayScrollbars.min.css"> -->
+    <!-- <link type="text/css" rel="stylesheet" href="/assets/plugins/daterangepicker/daterangepicker.css"> -->
+    <!-- <link type="text/css" rel="stylesheet" href="/assets/plugins/icheck-bootstrap/icheck-bootstrap.min.css"> -->
+    <!-- <link type="text/css" rel="stylesheet" href="/assets/plugins/summernote/summernote-bs4.css"> -->
+    <!-- <link type="text/css" rel="stylesheet" href="/assets/plugins/toastr/toastr.min.css"> -->
+    <link
+      type="text/css"
+      rel="stylesheet"
+      href="/assets/plugins/sweetalert2-theme-bootstrap-4/bootstrap-4.min.css"
+    />
+    <link
+      type="text/css"
+      rel="stylesheet"
+      href="/assets/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css"
+    />
+    <link
+      type="text/css"
+      rel="stylesheet"
+      href="/assets/plugins/datatables-responsive/css/responsive.bootstrap4.min.css"
+    />
+    <link
+      type="text/css"
+      href="//fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700"
+      rel="stylesheet"
+    />
+  </head>
+
+  <body class="hold-transition sidebar-mini layout-fixed text-sm">
+    <script>
+      function handleAlert(path) {
+        Swal.fire({
+          title: "Are you sure?",
+          text: "You won't be able to revert this!",
+          icon: "warning",
+          showCancelButton: true,
+          confirmButtonColor: "#3085d6",
+          cancelButtonColor: "#d33",
+          confirmButtonText: "Yes, delete it!",
+        }).then((result) => {
+          if (result.isConfirmed) {
+            window.location.href = path;
+          }
+        });
+      }
+    </script>
+    <div class="wrapper">
+      <%- include('../include/header') %> <%- include('../include/sidebar') %>
+      <div class="content-wrapper">
+        <div class="content-header">
+          <div class="container-fluid">
+            <div class="row mb-2">
+              <div class="col-sm-6">
+                <h1 class="m-0 text-dark"><%= title %></h1>
+              </div>
+            </div>
+          </div>
+        </div>
+        <section class="content"><%- include(filename) %></section>
+      </div>
+      <%- include('../include/footer') %>
+      <aside class="control-sidebar control-sidebar-dark"></aside>
+    </div>
+    <script src="/assets/plugins/jquery/jquery.min.js"></script>
+    <script src="/assets/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="/assets/dist/js/adminlte.min.js"></script>
+    <!-- <script src="/assets/plugins/daterangepicker/daterangepicker.js"></script> -->
+    <script src="/assets/plugins/bootstrap4-duallistbox/jquery.bootstrap-duallistbox.min.js"></script>
+    <!-- <script src="/assets/plugins/summernote/summernote-bs4.min.js"></script> -->
+    <script src="/assets/plugins/select2/js/select2.full.min.js"></script>
+    <!-- <script src="/assets/plugins/toastr/toastr.min.js"></script> -->
+    <script src="/assets/plugins/sweetalert2/sweetalert2.min.js"></script>
+    <script src="/assets/plugins/datatables/jquery.dataTables.min.js"></script>
+    <script src="/assets/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js"></script>
+    <script src="/assets/plugins/datatables-responsive/js/dataTables.responsive.min.js"></script>
+    <script src="/assets/plugins/datatables-responsive/js/responsive.bootstrap4.min.js"></script>
+    <script>
+      $("#crud-table").DataTable();
+    </script>
+  </body>
+</html>

@@ -14,7 +14,6 @@ const ProductCardTwo = ({
     cartQuantity !== undefined ? cartQuantity : 0
   );
   const navigate = useNavigate();
-  // const { authTokens } = React.useContext(AuthContext);
   const changeQuantity = async (q) => {
     // if (authTokens["access"]) {
     //   const response = await fetch(

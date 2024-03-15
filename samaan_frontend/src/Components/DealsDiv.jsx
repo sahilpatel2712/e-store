@@ -4,12 +4,15 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import "swiper/css/pagination";
 import "swiper/css/scrollbar";
-import AuthContext from "../context/Auth";
 import { SkeletonCardTwo } from "./Skeletons";
+import { useSelector } from "react-redux";
 
 const DealsDiv = ({ category, categoryId }) => {
   const [swiper, setSwiper] = React.useState(null);
-  const [data, setData] = React.useState();
+  const { productsData } = useSelector((state) => state.products);
+
+  // const [data, setData] = React.useState();
+
   // const { authTokens } = React.useContext(AuthContext);
   // const fetchData = async () => {
   //   if (authTokens) {
@@ -88,8 +91,8 @@ const DealsDiv = ({ category, categoryId }) => {
       onSlideChange={() => console.log("slide change")}
       onSwiper={setSwiper}
     >
-      {data?.length > 0
-        ? data?.map((item, id) => {
+      {productsData?.length > 0
+        ? productsData?.map((item, id) => {
             return (
               <SwiperSlide key={id}>
                 <ProductCardTwo

@@ -11,8 +11,6 @@ module.exports = {
         orders = await OrderModel.findAll({ where: { orderId: orderId } });
       } else if (userId) {
         orders = await OrderModel.findAll({ where: { userId: userId } });
-      } else {
-        orders = await OrderModel.findAll();
       }
 
       if (orders.length === 0) {
@@ -28,15 +26,16 @@ module.exports = {
 
   addOrders: async (req, res, next) => {
     try {
-      const { userId, productId, categoryId, orderInfo, orderAddress } =
+      const { userId, productId, orderInfo, orderAddress, total, status } =
         req.body;
 
       const newOrder = await OrderModel.create({
         userId,
         productId,
-        categoryId,
         orderInfo,
         orderAddress,
+        total,
+        status,
       });
 
       res.status(201).json(newOrder);

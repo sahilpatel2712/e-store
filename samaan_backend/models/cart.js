@@ -1,24 +1,28 @@
 const { DataTypes } = require("sequelize");
 const { sequelize } = require("./index");
 const UserModel = require("./userModel");
+const ProductModel = require("./product");
 
-const CartModel = sequelize.define("Cart", {
+const CartModel = sequelize.define("Carts", {
   cartId: {
     type: DataTypes.INTEGER,
     primaryKey: true,
     autoIncrement: true,
   },
-  userId: {
+  quantity: {
     type: DataTypes.INTEGER,
     allowNull: false,
-    unique: true,
-  },
-  cartItem: {
-    type: DataTypes.JSON,
   },
 });
 
-UserModel.hasOne(CartModel, { foreignKey: "userId" });
-CartModel.belongsTo(UserModel, { foreignKey: "userId" });
+
+CartModel.belongsTo(UserModel, {
+  foreignKey: "userId",
+  onDelete: "CASCADE",
+});
+CartModel.belongsTo(ProductModel, {
+  foreignKey: "productId",
+  onDelete: "CASCADE",
+});
 
 module.exports = CartModel;

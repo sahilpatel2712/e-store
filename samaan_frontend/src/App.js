@@ -21,12 +21,11 @@ import "./styles/header.css";
 
 import { useDispatch, useSelector } from "react-redux";
 import { userAuth } from "./redux/reducers/auth";
-import { getProductByCategory } from "./redux/reducers/product";
+import { getProduct } from "./redux/reducers/product";
 import { getCategory } from "./redux/reducers/categories";
 
 const App = () => {
   const { token } = useSelector((state) => state.auth);
-  const { productsData } = useSelector((state) => state.products);
   const dispatch = useDispatch();
   // const [cart, setCart] = React.useState([]);
   // const { authTokens } = React.useContext(AuthContext);
@@ -57,7 +56,7 @@ const App = () => {
       dispatch(userAuth({ token: token }));
     }
     dispatch(getCategory());
-    // dispatch(getProductByCategory(1));
+    dispatch(getProduct());
   }, []);
 
   return (

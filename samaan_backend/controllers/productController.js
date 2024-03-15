@@ -28,37 +28,6 @@ module.exports = {
     }
   },
 
-  addProduct: async (req, res, next) => {
-    try {
-      const {
-        productName,
-        productPrice,
-        productImage,
-        categoryId,
-        productSupplyNumber,
-        productWeight,
-        productDescription,
-        productFlavour,
-      } = req.body;
-
-      const newProduct = await ProductModel.create({
-        productName,
-        productPrice,
-        productImage,
-        categoryId,
-        productSupplyNumber,
-        productWeight,
-        productDescription,
-        productFlavour,
-      });
-
-      res.status(201).json(newProduct);
-    } catch (error) {
-      console.error("Error adding product:", error);
-      res.status(500).json({ error: "Internal Server Error" });
-    }
-  },
-
   updateProduct: async (req, res, next) => {
     try {
       const productId = req.params.productId;
@@ -101,22 +70,5 @@ module.exports = {
     }
   },
 
-  deleteProduct: async (req, res, next) => {
-    try {
-      const productId = req.params.productId;
-
-      const deletedRowCount = await ProductModel.destroy({
-        where: { productId },
-      });
-
-      if (deletedRowCount === 0) {
-        return res.status(404).json({ error: "Product not found" });
-      }
-
-      res.json({ message: "Product deleted successfully" });
-    } catch (error) {
-      console.error("Error deleting product:", error);
-      res.status(500).json({ error: "Internal Server Error" });
-    }
-  },
+ 
 };

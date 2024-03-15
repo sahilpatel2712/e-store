@@ -1,0 +1,106 @@
+<form id="crud-frm" method="post" action="/admin/products/save/<%= data === null ? 0 : data.productId %>"
+    autocomplete="off" enctype="multipart/form-data" >
+    <div class="row">
+        <div class="col-lg-12 col-12">
+            <div class="card card-info card-outline">
+                <div class="card-header">
+                    <h3 class="card-title">
+                        <%= title %>
+                    </h3>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Product Name</label>
+                                <input type="text" class="form-control" name="productName"
+                                    value="<%= data != null ? data['productName'] : '' %>" required />
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Price</label>
+                                <input type="text" class="form-control" name="productPrice"
+                                    value="<%= data != null ? data['productPrice'] : '' %>" required />
+                            </div>
+                        </div>
+                        
+                           
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Category</label>
+                                <select class="form-control" name="categoryId" required>
+                                    <option value="">---select---</option>
+                                    <% categories.forEach((category)=> { %>
+                                        <option value="<%= category.categoryId  %>"
+                                            <% if (data!==null) { %>
+                                                selected=" <%= data.categoryId===category.categoryId ? true:false  %>"
+                                                <%  } %>
+                                                >
+                                                <%= category.categoryName %>
+                                        </option>
+                                        <% }) %>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Product Supply Number</label>
+                                <input type="number" class="form-control" name="productSupplyNumber"
+                                    value="<%= data != null ? data['productSupplyNumber'] : ''%>" required />
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Product Weight</label>
+                                <input type="text" class="form-control" name="productWeight"
+                                    value="<%= data != null ? data['productWeight'] : ''%>" required />
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Product Flavour</label>
+                                <input type="text" class="form-control" name="productFlavour"
+                                value="<%= data != null ? data['productFlavour'] : ''%>" required />
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Product Description</label>
+                                <textarea class="form-control" name="productDescription">
+<%= data != null ? data['productDescription'] : ''%></textarea>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label>Image URL</label>
+                                
+                                <input class="form-control" id="formFile" type="file" name="productImage" />
+                            </div>
+                        </div>
+    
+                        <% if (data !=null) { %>
+                            <div class="col-md-4">
+                                <img src="<%= data != null ? data['productImage'] : '' %>" alt="product"
+                                    style="height: 100px;width: 120px;">
+                            </div>
+                            <% } %>
+                    </div>
+                </div>
+
+            
+
+                <div class="card-footer">
+                    <button type="submit" class="btn btn-info">
+                        <%= data==null ? 'Add' : 'Update' %>
+                    </button>
+                    <a href="/admin/products"><button type="button" class="btn btn-default ml-2">
+                            Cancel
+                        </button></a>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
