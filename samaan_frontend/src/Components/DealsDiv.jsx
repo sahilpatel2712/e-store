@@ -82,31 +82,33 @@ const DealsDiv = ({ category, categoryId }) => {
 
   return (
     <Swiper
+      style={{ width: "100%" }}
       pagination={{ clickable: true }}
       breakpoints={breakpoints}
       rewind={false}
-      slidesPerView={6}
+      slidesPerView={productsData.length < 6 ? productsData.length : 5}
       autoplay={true}
       navigation={true}
-      onSlideChange={() => console.log("slide change")}
       onSwiper={setSwiper}
     >
       {productsData?.length > 0
-        ? productsData?.map((item, id) => {
-            return (
-              <SwiperSlide key={id}>
-                <ProductCardTwo
-                  key={id}
-                  name={item.name}
-                  price={item.price}
-                  imgSrc={item.img_path}
-                  weight={item.weight}
-                  category={item.category}
-                  productId={item.id}
-                  cartQuantity={item.quantity}
-                />
-              </SwiperSlide>
-            );
+        ? productsData?.map((item) => {
+            if (item.categoryId === categoryId) {
+              return (
+                <SwiperSlide key={item.productId}>
+                  <ProductCardTwo
+                    key={item.productId}
+                    name={item.productName}
+                    price={item.productPrice}
+                    imgSrc={item.productImage}
+                    weight={item.productWeight}
+                    category={category}
+                    categoryId={categoryId}
+                    productId={item.productId}
+                  />
+                </SwiperSlide>
+              );
+            }
           })
         : [1, 1, 1, 1, 1, 1, 1, 1].map((item, id) => {
             return (
@@ -114,17 +116,7 @@ const DealsDiv = ({ category, categoryId }) => {
                 key={id}
                 style={{ display: "flex", justifyContent: "center" }}
               >
-                {/* <SkeletonCardTwo /> */}
-                <ProductCardTwo
-                  key={id}
-                  name={item.name}
-                  price={item.price}
-                  imgSrc={item.img_path}
-                  weight={item.weight}
-                  category={category}
-                  productId={item.id}
-                  cartQuantity={item.quantity}
-                />
+                <SkeletonCardTwo />
               </SwiperSlide>
             );
           })}

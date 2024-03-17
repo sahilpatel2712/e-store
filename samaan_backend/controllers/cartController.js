@@ -3,15 +3,15 @@ const CartModel = require("../models/cart");
 const cartController = {
   addOrUpdateCartItem: async (req, res, next) => {
     try {
-      const { userId,productId, quantity } = req.body;
+      const { userId, productId, quantity } = req.body.data;
 
-      let cart = await CartModel.findOne({ where: { userId,productId } });
+      let cart = await CartModel.findOne({ where: { userId, productId } });
       if (!cart) {
-        cart = await CartModel.create({ userId, productId,quantity });
+        cart = await CartModel.create({ userId, productId, quantity });
         return res.status(201).json(cart);
       }
 
-      cart.quantity = quantity;
+      cart.quantity += quantity;
       await cart.save();
       res.status(200).json(cart);
     } catch (error) {
@@ -32,7 +32,7 @@ const cartController = {
     try {
       const { userId } = req.params;
 
-      const cart = await CartModel.findOne({ where: { userId } });
+      const cart = await CartModel.findAll({ where: { userId } });
       if (!cart) {
         return res.status(404).json({ error: "Cart not found" });
       }

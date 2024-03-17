@@ -1,6 +1,4 @@
-import {
-  createSlice,
-} from "@reduxjs/toolkit";
+import { createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 
 const authReducer = createSlice({
@@ -10,7 +8,8 @@ const authReducer = createSlice({
     token: localStorage.getItem("userAuthToken")
       ? localStorage.getItem("userAuthToken")
       : null,
-    isAuthenticated: localStorage.getItem("userAuthToken") ? true : false,
+    isAuthenticated:
+      localStorage.getItem("userAuthToken") !== "null" ? true : false,
   },
   reducers: {
     setUser: (state, action) => {
@@ -30,7 +29,7 @@ export const userCreate = (data) => {
   return async (dispatch) => {
     try {
       let response = await axios.post(
-        "http://127.0.0.1:5000/api/v1/registration",
+        process.env.REACT_APP_USER_REGISTRATION,
         data
       );
       console.log(response);
@@ -47,10 +46,7 @@ export const userCreate = (data) => {
 export const userLog = (data) => {
   return async (dispatch) => {
     try {
-      let response = await axios.post(
-        "http://127.0.0.1:5000/api/v1/login",
-        data
-      );
+      let response = await axios.post(process.env.REACT_APP_USER_LOGIN, data);
       localStorage.setItem("userAuthToken", response.data.authToken);
       dispatch(setUser(response.data.userData));
       dispatch(setToken(response.data.authToken));
@@ -74,7 +70,7 @@ export const userAuth = (data) => {
   return async (dispatch) => {
     try {
       let response = await axios.post(
-        "http://127.0.0.1:5000/api/v1/authorization",
+        process.env.REACT_APP_USER_AUTH,
         {},
         { headers: { authorization: data.token } }
       );

@@ -13,7 +13,6 @@ module.exports = {
         },
       });
       products = products.map((product) => product.toJSON());
-      console.log(products);
       res.render("layout/app", {
         title: "Products",
         filename: "../products/index",

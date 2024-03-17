@@ -44,12 +44,12 @@ module.exports = {
 
       const user = await UserModel.findOne({ where: { email } });
       if (!user) {
-        return res.status(401).json({ error: "Invalid email or password" });
+        return res.status(401).json({ error: "Invalid email " });
       }
 
       const isPasswordValid = await bcrypt.compare(password, user.password);
       if (!isPasswordValid) {
-        return res.status(401).json({ error: "Invalid email or password" });
+        return res.status(401).json({ error: "Invalid  password" });
       }
 
       const token = jwt.sign(

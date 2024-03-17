@@ -47,7 +47,7 @@ const CartCard = ({
     <div className="CartCardOuter">
       <div className="CartCardWrapper">
         <div className="ImageCart">
-          <img src={imagSrc} alt="" srcset="" />
+          <img src={imagSrc} alt="" srcSet="" />
         </div>
         <div className="CartDetails">
           <div className="ProductNameCart">
@@ -87,11 +87,11 @@ const CartCard = ({
                   QuantityEditState ? { display: "none" } : { display: "flex" }
                 }
               >
-                <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                <g id="SVGRepo_bgCarrier" strokeWidth="0"></g>
                 <g
                   id="SVGRepo_tracerCarrier"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
                 ></g>
                 <g id="SVGRepo_iconCarrier">
                   {" "}
@@ -117,11 +117,11 @@ const CartCard = ({
                   QuantityEditState ? { display: "flex" } : { display: "none" }
                 }
               >
-                <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                <g id="SVGRepo_bgCarrier" strokeWidth="0"></g>
                 <g
                   id="SVGRepo_tracerCarrier"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
                 ></g>
                 <g id="SVGRepo_iconCarrier">
                   {" "}

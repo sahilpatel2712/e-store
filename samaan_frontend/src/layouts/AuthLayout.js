@@ -10,7 +10,7 @@ const AuthLayout = () => {
             className=" h-[80%] w-[80%] object-contain "
             src="/login_left.svg"
             alt=""
-            srcset=""
+            srcSet=""
           />
         </div>
         <div className=" w-[100%] md:w-[50%] h-[100%] flex justify-center items-center flex-col">

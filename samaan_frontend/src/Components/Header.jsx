@@ -433,7 +433,7 @@ const Header = () => {
               <img
                 src="/Assets/category_logos/chips.webp"
                 alt="test"
-                srcset=""
+                srcSet=""
                 onClick={() => {
                   navigate("/search/44");
                   navigate(0);
@@ -452,7 +452,7 @@ const Header = () => {
               <img
                 src="/Assets/category_logos/vegetables.webp"
                 alt="test"
-                srcset=""
+                srcSet=""
               />
             </div>
           </li>
@@ -467,7 +467,7 @@ const Header = () => {
               <img
                 src="/Assets/category_logos/breakfast.webp"
                 alt="test"
-                srcset=""
+                srcSet=""
                 onClick={() => {
                   navigate("/search/86");
                   navigate(0);
@@ -476,7 +476,7 @@ const Header = () => {
               <img
                 src="/Assets/category_logos/dairy.webp"
                 alt="test"
-                srcset=""
+                srcSet=""
                 onClick={() => {
                   navigate("/search/103");
                   navigate(0);
@@ -496,12 +496,12 @@ const Header = () => {
               <img
                 src="/Assets/category_logos/cold_drinks.webp"
                 alt="test"
-                srcset=""
+                srcSet=""
               />
               <img
                 src="./Assets/category_logos/hot_drinks.webp"
                 alt="test"
-                srcset=""
+                srcSet=""
                 onClick={() => {
                   navigate("/search/90");
                   navigate(0);
@@ -521,7 +521,7 @@ const Header = () => {
               <img
                 src="/Assets/category_logos/sweet tooth.webp"
                 alt="test"
-                srcset=""
+                srcSet=""
                 onClick={() => {
                   navigate("/search/156");
                   navigate(0);
@@ -541,7 +541,7 @@ const Header = () => {
               <img
                 src="/Assets/category_logos/sweet tooth.webp"
                 alt="test"
-                srcset=""
+                srcSet=""
                 onClick={() => {
                   navigate("/search/156");
                   navigate(0);
@@ -560,7 +560,7 @@ const Header = () => {
               <img
                 src="/Assets/category_logos/sweet tooth.webp"
                 alt="test"
-                srcset=""
+                srcSet=""
                 onClick={() => {
                   navigate("/search/156");
                   navigate(0);

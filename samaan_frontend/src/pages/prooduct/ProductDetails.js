@@ -1,45 +1,43 @@
 import React from "react";
 import { SkeletOnPrice } from "../../Components/Skeletons";
 import Skeleton from "react-loading-skeleton";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import UserReviews from "../../Components/UserReviews";
-const Data = {
-  name: "Product Name",
-  price: "Product Price",
-  img_path: "/cadbury-chocobakes-chocofilled-cookies.png",
-  brand: "Product Brand",
-  weight: "Product Weight",
-  flavour: "Product Flavour",
-  category: "Product Category",
-};
+import { useSelector, useDispatch } from "react-redux";
+import { addOrUpdateUserCart } from "../../redux/reducers/cart";
 
 const ProductDetails = () => {
-  const [quantity, setQuantity] = React.useState(0);
+  const { id } = useParams();
+  const Data = useSelector((state) =>
+    state.products.productsData.find((product) => product.productId == id)
+  );
+  const auth = useSelector((state) => state.auth);
+  const dispatch = useDispatch();
   const [hover, setHover] = React.useState(null);
   const [rating, setRating] = React.useState(0);
   const [ReviewText, setReviewText] = React.useState("");
   const [Reviews, setReviews] = React.useState([]);
   const [averageReview, setAverageReview] = React.useState(0);
-  const [method, setMethod] = React.useState("POST");
-  const [authTokens, setAuthTokens] = React.useState();
   const { navigate } = useNavigate();
 
-  const changeQuantity = (value) => {
-    if (quantity === 0) {
-      setMethod("POST");
+  const handleProductAdd = (productId) => {
+    if (auth.isAuthenticated) {
+      dispatch(
+        addOrUpdateUserCart({
+          userId: auth.user.userId,
+          productId: productId,
+          quantity: 1,
+        })
+      );
     } else {
-      setMethod("PATCH");
+      navigate("/login");
     }
   };
+
   const handleAddReview = () => {
-    if (authTokens) {
-      if (method === "POST") {
-        // Add Review
-      } else {
-        // Edit Review
-      }
+    if (auth.isAuthenticated) {
     } else {
-      navigate("/signup");
+      navigate("/login");
     }
   };
   return (
@@ -49,12 +47,12 @@ const ProductDetails = () => {
           <div className="DetailsOuter Vflex AroundFlex">
             <div className="ImageWrapperDiv">
               <div className="ProductNameHeader mobileProduct p-[10px]">
-                <h3>{Data ? Data["name"] : ""}</h3>
+                <h3>{Data ? Data.productName : ""}</h3>
               </div>
               <div className=" w-[100%] md:w-[50%] flex justify-center items-center flex-col AddGap py-[5px] px-[10px]">
                 <div className="w-[100%] ProductPriceDiv mobileProduct ml-[5px]">
                   <span className="ProductPrice">
-                    {Data?.price ? Data["price"] : <SkeletOnPrice />}
+                    {Data?.productPrice ? Data.productPrice : <SkeletOnPrice />}
                   </span>
                 </div>
               </div>
@@ -65,7 +63,7 @@ const ProductDetails = () => {
                       <img
                         width={150}
                         className="object-fill w-full h-full aspect-video"
-                        src={`${Data["img_path"]}`}
+                        src={Data.productImage}
                         alt={"category"}
                       />
                     </div>
@@ -75,62 +73,24 @@ const ProductDetails = () => {
                 <Skeleton className="h-[400px] min-w-[300px] w-[100%] rounded-[30px]" />
               )}{" "}
               <div className="w-[100%] AddToCartWrapper ">
-                {quantity > 0 ? (
-                  <div className="w-[8rem] h-[100%] flex justify-center items-center">
-                    <div className="w-[33.33%] h-[100%] flex justify-center">
-                      <div
-                        className=" bg-yellow-300  text-center font-[900] QuantityIcon text-green-800  rounded-full cursor-pointer "
-                        onClick={() => {
-                          if (quantity > 0) {
-                            setQuantity(quantity - 1);
-                            changeQuantity(-1);
-                          } else {
-                            setQuantity(0);
-                          }
-                        }}
-                      >
-                        -
-                      </div>
-                    </div>
-                    <div className="w-[33.33%] h-[100%] flex justify-center items-center text-center">
-                      {" "}
-                      {quantity}
-                    </div>
-                    <div className="w-[33.33%] h-[100%] flex justify-center ">
-                      <div
-                        className="bg-yellow-300  text-center font-[900] text-green-800  rounded-full cursor-pointer QuantityIcon "
-                        onClick={() => {
-                          setQuantity(quantity + 1);
-                          changeQuantity(1);
-                        }}
-                      >
-                        +
-                      </div>
-                    </div>
-                  </div>
-                ) : (
-                  <button
-                    className="w-[100%] h-[90%]  shadow-md rounded-md bg-yellow-300 text-green-800 text-xs font-bold  AddToCartButton"
-                    onClick={() => {
-                      if (authTokens) {
-                        setQuantity(quantity + 1);
-                        changeQuantity(1);
-                      } else {
-                        navigate("/signup");
-                      }
-                    }}
-                  >
-                    {" "}
-                    Add to cart
-                  </button>
-                )}
+                <button
+                  className="w-[100%] h-[90%]  shadow-md rounded-md bg-yellow-300 text-green-800 text-xs font-bold  AddToCartButton"
+                  onClick={() => handleProductAdd(id)}
+                >
+                  {" "}
+                  Add to cart
+                </button>
               </div>
             </div>
 
             <div className="ProductDetailsDiv">
               <div className="ProductNameHeader laptopProduct">
                 <h3>
-                  {Data ? Data["name"] : <Skeleton width={60} height={20} />}
+                  {Data ? (
+                    Data.productName
+                  ) : (
+                    <Skeleton width={60} height={20} />
+                  )}
                 </h3>
               </div>
               <div className=" w-[100%] md:w-[50%] flex justify-center items-center flex-col AddGap laptopProduct">
@@ -139,7 +99,11 @@ const ProductDetails = () => {
                   style={{ marginLeft: "5px" }}
                 >
                   <span className="ProductPrice">
-                    {Data ? Data["price"] : <Skeleton width={60} height={20} />}
+                    {Data ? (
+                      Data.productPrice
+                    ) : (
+                      <Skeleton width={60} height={20} />
+                    )}
                   </span>
                 </div>
               </div>
@@ -150,20 +114,10 @@ const ProductDetails = () => {
                   <div className="w-[100%]">
                     <div className="ProductTable">
                       <div className="ProductTableRow">
-                        <div className="ProductTableTd1">BRAND</div>
-                        <div className="ProductTableTd2">
-                          {Data ? (
-                            Data["brand"]
-                          ) : (
-                            <Skeleton width={60} height={20} />
-                          )}
-                        </div>
-                      </div>
-                      <div className="ProductTableRow">
                         <div className="ProductTableTd1">WEIGHT</div>
                         <div className="ProductTableTd2">
                           {Data ? (
-                            Data["weight"]
+                            Data.productWeight
                           ) : (
                             <Skeleton width={60} height={20} />
                           )}
@@ -173,7 +127,7 @@ const ProductDetails = () => {
                         <div className="ProductTableTd1">FLAVOUR</div>
                         <div className="ProductTableTd2">
                           {Data ? (
-                            Data["flavour"]
+                            Data.productFlavour
                           ) : (
                             <Skeleton width={60} height={20} />
                           )}
@@ -183,7 +137,7 @@ const ProductDetails = () => {
                         <div className="ProductTableTd1">CATEGORY</div>
                         <div className="ProductTableTd2">
                           {Data ? (
-                            Data["category"]
+                            Data.categoryId
                           ) : (
                             <Skeleton width={60} height={20} />
                           )}
@@ -196,16 +150,7 @@ const ProductDetails = () => {
 
               <div className="DescHeader">
                 <h3>Description</h3>
-                <p>
-                  Lorem ipsum, dolor sit amet consectetur adipisicing elit.
-                  Excepturi saepe illum molestias iusto fugiat quas consectetur
-                  nihil quia laborum illo officia omnis sit error voluptatem
-                  autem eos facilis mollitia vero, necessitatibus amet ipsa hic
-                  maxime ab! Magnam, ipsa amet? Porro cumque illo corporis
-                  itaque dicta pariatur dolore, earum blanditiis nesciunt, cum
-                  dignissimos quae neque labore consequatur explicabo impedit
-                  laudantium recusandae numquam accusantium nihil vitae, facere
-                </p>
+                <p>{Data ? Data.productDescription : ""}</p>
               </div>
             </div>
           </div>
@@ -273,9 +218,7 @@ const ProductDetails = () => {
                       className="WriteReviewButton"
                       onClick={handleAddReview}
                     >
-                      {method === "PATCH"
-                        ? "Edit The Review"
-                        : "Post The Review"}
+                      Post The Review{" "}
                     </button>
                   </div>
                 </div>

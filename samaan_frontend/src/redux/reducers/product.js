@@ -17,24 +17,36 @@ const { setProduct } = productReducer.actions;
 
 export const getProduct = () => {
   return async (dispatch) => {
-    let response = await axios.get("http://127.0.0.1:5000/api/v1/products");
-    dispatch(setProduct(response.data));
+    try {
+      let response = await axios.get(process.env.REACT_APP_GET_PRODUCTS);
+      dispatch(setProduct(response.data));
+    } catch (error) {
+      console.log(error);
+    }
   };
 };
 
 export const updateProduct = (data) => {
   return async (dispatch, getState) => {
-    let state = getState();
-    let productIndex;
-    const newProductList = [...state.products.productsData];
-    newProductList.find((value, index) => {
-      if (value.id === data.id) {
-        productIndex = index;
-        return value;
-      }
-    });
-    newProductList[productIndex] = data;
-    dispatch(setProduct(newProductList));
+    try {
+      let response = await axios.post(
+        `${process.env.REACT_APP_GET_PRODUCT_UPDATE}${data.productId}`,
+        { data }
+      );
+      let state = getState();
+      let productIndex;
+      const newProductList = [...state.products.productsData];
+      newProductList.find((value, index) => {
+        if (value.id === data.id) {
+          productIndex = index;
+          return value;
+        }
+      });
+      newProductList[productIndex] = data;
+      dispatch(setProduct(newProductList));
+    } catch (error) {
+      console.log(error);
+    }
   };
 };
 

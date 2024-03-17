@@ -68,10 +68,14 @@ module.exports = {
           if (!user) {
             return res.status(404).json({ error: "User not found" });
           }
+          const hashedPassword = await bcrypt.hash(
+            password,
+            Number(process.env.SALT)
+          );
           user.name = name;
           user.email = email;
           user.address = address;
-          user.password = password;
+          user.password = hashedPassword;
           await user.save();
 
           res.redirect("/admin/users");
