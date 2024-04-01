@@ -52,7 +52,7 @@ const Footer = () => {
             </li>
           </ul>
         </div>
-        <div className="FooterSubscribeDiv">
+        {/* <div className="FooterSubscribeDiv">
           <form action="" className="FooterSubscribeForm">
             <h3 className="FooterSubscribeHeader">Subscribe</h3>
             <div className="FooterSubscribeInputDiv">
@@ -65,7 +65,7 @@ const Footer = () => {
             </div>
             <button className="FooterSubscribeButton">Subscribe Now</button>
           </form>
-        </div>
+        </div> */}
       </div>
       <hr />
       <div className="FooterLowerDiv">

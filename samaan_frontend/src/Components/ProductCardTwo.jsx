@@ -3,11 +3,18 @@ import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import { addOrUpdateUserCart } from "../redux/reducers/cart";
-const ProductCardTwo = ({ productId, imgSrc, name, price, weight }) => {
+const ProductCardTwo = ({
+  productId,
+  imgSrc,
+  name,
+  price,
+  weight,
+  quantity,
+}) => {
   const navigate = useNavigate();
   const auth = useSelector((state) => state.auth);
   const dispatch = useDispatch();
-  
+
   const handleProductAdd = (productId) => {
     if (auth.isAuthenticated) {
       dispatch(
@@ -57,7 +64,14 @@ const ProductCardTwo = ({ productId, imgSrc, name, price, weight }) => {
                 </g>
               </svg>
             </div>
-            {/* <div className="TimerText">20 MINS</div> */}
+            {quantity < 5 ? (
+              <div
+                className="TimerText"
+                style={{ color: "red", marginLeft: 10 }}
+              >
+                ! Only Few Left
+              </div>
+            ) : null}
           </div>
           <div className="Desc">
             <div className="Title">

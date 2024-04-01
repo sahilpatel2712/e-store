@@ -7,27 +7,22 @@ const OnSearchRight = ({ data }) => {
     <div>
       <div className="RightOuter">
         <div className="ProductsDiv">
-          {data ?
-            data.map((item, id) => {
-              return (
-                <ProductCardTwo
-                  key={id}
-                  name={item.name}
-                  price={item.price}
-                  imgSrc={item.img_path}
-                  weight={item.weight}
-                  category={item.category}
-                  productId={item.id}
-                />
-              );
-            }):
-            [1, 1, 1, 1, 1, 1, 1, 1,1,1,1,1,1].map((item, id) => {
-              return (
-                  <SkeletonCardTwo />
-                  
-              );
-            })
-            }
+          {data.length !== 0
+            ? data.map((item, id) => {
+                return (
+                  <ProductCardTwo
+                    key={item.productId}
+                    name={item.productName}
+                    price={item.productPrice}
+                    imgSrc={item.productImage}
+                    weight={item.productWeight}
+                    productId={item.productId}
+                  />
+                );
+              })
+            : [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1].map((item, id) => {
+                return <SkeletonCardTwo />;
+              })}
         </div>
       </div>
     </div>

@@ -14,8 +14,6 @@ const CartModel = sequelize.define("Carts", {
     allowNull: false,
   },
 });
-
-
 CartModel.belongsTo(UserModel, {
   foreignKey: "userId",
   onDelete: "CASCADE",

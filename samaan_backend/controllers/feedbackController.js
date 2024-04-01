@@ -1,4 +1,5 @@
 const FeedbackModel = require("../models/feedback");
+const UserModel = require("../models/userModel");
 
 module.exports = {
   addFeedback: async (req, res, next) => {
@@ -30,15 +31,18 @@ module.exports = {
 
   getFeedbackById: async (req, res, next) => {
     try {
-      const { feedbackId } = req.params;
-      const feedback = await FeedbackModel.findByPk(feedbackId);
-      if (!feedback) {
-        res.status(404).json({ error: "Feedback not found" });
-        return;
-      }
-      res.status(200).json(feedback);
+      const { productId } = req.params;
+      const feedbacks = await FeedbackModel.findAll({ 
+        where: { productId },
+        include: [
+          { 
+            model: UserModel, 
+            attributes: ['name'] 
+          }
+        ] 
+      });      res.status(200).json(feedbacks);
     } catch (error) {
-      console.error("Error fetching feedback:", error);
+      console.error("Error fetching feedbacks:", error);
       res.status(500).json({ error: "Internal Server Error" });
     }
   },

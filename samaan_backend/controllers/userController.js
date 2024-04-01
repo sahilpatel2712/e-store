@@ -67,6 +67,26 @@ module.exports = {
       res.status(500).json({ error: "Internal Server Error" });
     }
   },
+  updateUserAddress: async (req, res, next) => {
+    try {
+      const { address,userId } = req.body;
+
+      const user = await UserModel.findByPk(userId);
+      if (!user) {
+        return res.status(404).json({ error: "User not found" });
+      }
+
+      user.address = address;
+      await user.save();
+
+      res
+        .status(200)
+        .json({ message: "User address updated successfully", user });
+    } catch (error) {
+      console.error("Error updating user address:", error);
+      res.status(500).json({ error: "Internal Server Error" });
+    }
+  },
   authorization: async (req, res, next) => {
     try {
       const token = req.headers.authorization;

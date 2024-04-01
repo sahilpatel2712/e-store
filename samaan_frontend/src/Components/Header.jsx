@@ -3,76 +3,38 @@ import Logo from "../aseets/images/Logo.png";
 import LogoutIcon from "../aseets/icons/LogoutIcon";
 import ToggleIcon from "../aseets/icons/ToggleIcon";
 import CloseIcon from "../aseets/icons/CloseIcon";
+import UserIcon from "../aseets/images/user.svg";
 import SearchIcon from "../aseets/icons/SearchIcon";
 import CartIcon from "../aseets/icons/CartIcon";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { userOut } from "../redux/reducers/auth";
+import BuyIcon from "../aseets/icons/BuyIcon";
 
 const Header = () => {
   const auth = useSelector((state) => state.auth);
-  // const [userDetails, setUserDetails] = useState();
+  const { productsData } = useSelector((state) => state.products);
   const dispatch = useDispatch();
   const popOverDiv = useRef(null);
   const popOverRef = useRef(null);
   const [popover, setPopOver] = useState(false);
   const [ToggleOn, setToggleOn] = useState(false);
   const [showOptions, setShowOptions] = useState(false);
-  const [lis, setLis] = useState([]);
-
-  const [searchBarData, setSearchBarData] = useState(lis);
-  const [clickedOnCategory, setClickedOnCategory] = useState(false);
-  const [hoverOn, setHoverOn] = useState(false);
+  const { categoriesData } = useSelector((state) => state.categories);
+  const [searchBarData, setSearchBarData] = useState([]);
   const navigate = useNavigate();
-
-  // const fetchData = async () => {
-  //   await fetch("https://api-krudra9125-gmailcom.vercel.app/api/searchbarData/")
-  //     .then((res) => res.json())
-  //     .then((data) => {
-  //       console.log(data);
-
-  //       setLis(data);
-  //     })
-  //     .catch((err) => console.log(err));
-
-  //   // setLis(product_data.product_data?.map((item) => { return item.name.toLowerCase() }));
-  // };
-  // const fetchUserDetails = async () => {
-  //   await fetch("https://api-krudra9125-gmailcom.vercel.app/api/userDetails/", {
-  //     method: "GET",
-  //     headers: {
-  //       "Content-Type": "application/json",
-  //       authorization: `Bearer ${authTokens["access"]}`,
-  //     },
-  //   })
-  //     .then((res) => res.json())
-  //     .then((data) => {
-  //       console.log(data);
-  //       setUserDetails(data);
-  //     })
-  //     .catch((err) => console.log(err));
-  // };
-  // React.useEffect(() => {
-  //   console.log("auth tokens", authTokens);
-  //   if (authTokens !== null) {
-  //     fetchUserDetails();
-  //   }
-  // }, [authTokens]);
-  // React.useEffect(() => {
-  //   fetchData();
-  // }, []);
-
   const [activeCategory, setActiveCategory] = useState(null);
   const ToggleDiv = useRef(null);
+
   const searchBarDataOnChange = (e) => {
     if (e.length <= 0) {
       setShowOptions(false);
     } else {
       setShowOptions(true);
       setSearchBarData(
-        lis?.filter((item) => {
-          if (item.name.toLowerCase().includes(e)) {
+        productsData?.filter((product) => {
+          if (product.productName.toLowerCase().includes(e)) {
             return true;
           } else {
             return false;
@@ -90,23 +52,6 @@ const Header = () => {
     setToggleOn(!ToggleOn);
   };
 
-  const handleCategoryHover = (index) => {
-    setHoverOn(true);
-    setActiveCategory(index);
-  };
-
-  const handleCategoryLeave = () => {
-    setHoverOn(false);
-    if (clickedOnCategory === false) {
-      setActiveCategory(null);
-    }
-  };
-
-  const handleSubMenuHover = (index) => {
-    setHoverOn(true);
-    setActiveCategory(index);
-  };
-
   const handleWindowResize = () => {
     if (ToggleDiv.current) {
       ToggleDiv.current.style.display = "none";
@@ -114,17 +59,6 @@ const Header = () => {
     }
     const windowWidth = window.innerWidth;
     ToggleDiv.current.style.display = windowWidth > 1024 ? "block" : "none";
-  };
-
-  const handleClickHeaderAnchor = (index, e) => {
-    e.preventDefault();
-    setActiveCategory(index);
-    setClickedOnCategory(!clickedOnCategory);
-  };
-
-  const handleCategoryBlur = () => {
-    setClickedOnCategory(false);
-    setActiveCategory(null);
   };
 
   const handleBlur = () => {
@@ -206,12 +140,12 @@ const Header = () => {
                   return (
                     <Link
                       onMouseDownCapture={() => {
-                        navigate(`/search/${item.id}`);
+                        navigate(`/search/${item.productId}`);
                         window.location.reload();
                       }}
                       className="w-[100%] text-start  pl-7 hover:bg-yellow-300 hover:shadow-md transition-all duration-500  ease-in-out    border  "
                     >
-                      {item.name.toLowerCase()}
+                      {item?.productName.toLowerCase()}
                     </Link>
                   );
                 })}
@@ -248,7 +182,7 @@ const Header = () => {
               ref={popOverRef}
             >
               <img
-                src="./user.svg"
+                src={UserIcon}
                 className="NavImage w-[2.6rem] h-[2.6rem] active:w-[2.5rem] active:h-[2.5rem] "
                 alt="d"
               />
@@ -260,11 +194,9 @@ const Header = () => {
             >
               <ul>
                 <li className="UserNamePopOver">
-                  <p>{auth.user ? `${auth.user.name}` : ""}</p>
+                  <p className="m-0" >{auth.user ? `${auth.user.name}` : ""}</p>
                 </li>
-                <li className="UserNamePopOver">
-                  <Link to={"/forgotPassword"}>Change Password</Link>
-                </li>
+       
 
                 <li className="PopoverLine">
                   <div onClick={handleLogOut}>
@@ -287,287 +219,39 @@ const Header = () => {
               </p>
             </a>
           </div>
+          <div
+            className=" CartDiv VCenter-flex"
+            onClick={() => {
+              navigate("/orders");
+            }}
+          >
+            <a className="CartLink VCenter-flex ">
+              <p className="NavImageWrapper bg-yellow-300  rounded-2xl CartContent   w-[3rem] h-[3rem]  hover:shadow-md transition-all duration-500  ease-in-out  VCenter-flex">
+                <BuyIcon/>
+              </p>
+            </a>
+          </div>
         </div>
       </div>
       <div className="LowerNav Laptop" id="ToggleM" ref={ToggleDiv}>
         <ul className="MenuBannerUl VCenter-flex">
-          <li
-            className="MenuBannerLi"
-            id="Third"
-            onMouseEnter={() => handleCategoryHover(2)}
-            onMouseLeave={handleCategoryLeave}
-          >
-            <a
-              href=""
-              className={`${
-                activeCategory === 2 ? "activeCate" : ""
-              } HoverEffectLink MenuBannerLink`}
-              onClick={(e) => handleClickHeaderAnchor(2, e)}
-              onBlur={handleCategoryBlur}
-            >
-              <p className="HoverEffectLinkPara MenuBannerPara">Munchies</p>
-            </a>
-          </li>
-          <li
-            className="MenuBannerLi"
-            id="First"
-            onMouseEnter={() => handleCategoryHover(0)}
-            onMouseLeave={handleCategoryLeave}
-          >
-            <a
-              href=""
-              className={`${
-                activeCategory === 0 ? "activeCate" : ""
-              } HoverEffectLink MenuBannerLink`}
-              onClick={(e) => handleClickHeaderAnchor(0, e)}
-              onBlur={handleCategoryBlur}
-            >
-              <p className="HoverEffectLinkPara MenuBannerPara">
-                Vegetables & Fruits
-              </p>
-            </a>
-          </li>
-          <li
-            className="MenuBannerLi"
-            id="Second"
-            onMouseEnter={() => handleCategoryHover(1)}
-            onMouseLeave={handleCategoryLeave}
-          >
-            <a
-              href=""
-              className={`${
-                activeCategory === 1 ? "activeCate" : ""
-              } HoverEffectLink MenuBannerLink`}
-              onClick={(e) => handleClickHeaderAnchor(1, e)}
-              onBlur={handleCategoryBlur}
-            >
-              <p className="HoverEffectLinkPara MenuBannerPara">
-                Dairy & Breakfast
-              </p>
-            </a>
-          </li>
-
-          <li
-            className="MenuBannerLi"
-            id="Fourth"
-            onMouseEnter={() => handleCategoryHover(3)}
-            onMouseLeave={handleCategoryLeave}
-          >
-            <a
-              href=""
-              className={`${
-                activeCategory === 3 ? "activeCate" : ""
-              } HoverEffectLink MenuBannerLink`}
-              onClick={(e) => handleClickHeaderAnchor(3, e)}
-              onBlur={handleCategoryBlur}
-            >
-              <p className="HoverEffectLinkPara MenuBannerPara">Beverages</p>
-            </a>
-          </li>
-          <li
-            className="MenuBannerLi"
-            id="Fifth"
-            onMouseEnter={() => handleCategoryHover(4)}
-            onMouseLeave={handleCategoryLeave}
-          >
-            <a
-              href=""
-              className={`${
-                activeCategory === 4 ? "activeCate" : ""
-              } HoverEffectLink MenuBannerLink`}
-              onClick={(e) => handleClickHeaderAnchor(4, e)}
-              onBlur={handleCategoryBlur}
-            >
-              <p className="HoverEffectLinkPara MenuBannerPara">
-                Instant Foods
-              </p>
-            </a>
-          </li>
-          <li
-            className="MenuBannerLi"
-            id="Sixth"
-            onMouseEnter={() => handleCategoryHover(5)}
-            onMouseLeave={handleCategoryLeave}
-          >
-            <a
-              href=""
-              className={`${
-                activeCategory === 5 ? "activeCate" : ""
-              } HoverEffectLink MenuBannerLink`}
-              onClick={(e) => handleClickHeaderAnchor(5, e)}
-              onBlur={handleCategoryBlur}
-            >
-              <p className="HoverEffectLinkPara MenuBannerPara">Biscuits</p>
-            </a>
-          </li>
-          <li
-            className="MenuBannerLi"
-            id="Seventh"
-            onMouseEnter={() => handleCategoryHover(6)}
-            onMouseLeave={handleCategoryLeave}
-          >
-            <a
-              href=""
-              className={`${
-                activeCategory === 6 ? "activeCate" : ""
-              } HoverEffectLink MenuBannerLink`}
-              onClick={(e) => handleClickHeaderAnchor(6, e)}
-              onBlur={handleCategoryBlur}
-            >
-              <p className="HoverEffectLinkPara MenuBannerPara">Sweet Tooth</p>
-            </a>
-          </li>
-        </ul>
-        <ul
-          className="MenuBannerHoverDisplayUl"
-          style={{ display: clickedOnCategory || hoverOn ? "block" : "none" }}
-        >
-          <li
-            className={`Third MenuBannerDisplayLi SubMenu ${
-              activeCategory === 2 ? "active" : ""
-            }`}
-            onMouseEnter={() => handleSubMenuHover(2)}
-            onMouseLeave={handleCategoryLeave}
-          >
-            <div className="MenuBannerDisplayLiDiv">
-              <img
-                src="/Assets/category_logos/chips.webp"
-                alt="test"
-                srcSet=""
-                onClick={() => {
-                  navigate("/search/44");
-                  navigate(0);
-                }}
-              />
-            </div>
-          </li>
-          <li
-            className={`First MenuBannerDisplayLi SubMenu ${
-              activeCategory === 0 ? "active" : ""
-            }`}
-            onMouseEnter={() => handleSubMenuHover(0)}
-            onMouseLeave={handleCategoryLeave}
-          >
-            <div className="MenuBannerDisplayLiDiv">
-              <img
-                src="/Assets/category_logos/vegetables.webp"
-                alt="test"
-                srcSet=""
-              />
-            </div>
-          </li>
-          <li
-            className={`Second MenuBannerDisplayLi SubMenu ${
-              activeCategory === 1 ? "active" : ""
-            }`}
-            onMouseEnter={() => handleSubMenuHover(1)}
-            onMouseLeave={handleCategoryLeave}
-          >
-            <div className="MenuBannerDisplayLiDiv">
-              <img
-                src="/Assets/category_logos/breakfast.webp"
-                alt="test"
-                srcSet=""
-                onClick={() => {
-                  navigate("/search/86");
-                  navigate(0);
-                }}
-              />
-              <img
-                src="/Assets/category_logos/dairy.webp"
-                alt="test"
-                srcSet=""
-                onClick={() => {
-                  navigate("/search/103");
-                  navigate(0);
-                }}
-              />
-            </div>
-          </li>
-
-          <li
-            className={`Fourth MenuBannerDisplayLi SubMenu ${
-              activeCategory === 3 ? "active" : ""
-            }`}
-            onMouseEnter={() => handleSubMenuHover(3)}
-            onMouseLeave={handleCategoryLeave}
-          >
-            <div className="MenuBannerDisplayLiDiv">
-              <img
-                src="/Assets/category_logos/cold_drinks.webp"
-                alt="test"
-                srcSet=""
-              />
-              <img
-                src="./Assets/category_logos/hot_drinks.webp"
-                alt="test"
-                srcSet=""
-                onClick={() => {
-                  navigate("/search/90");
-                  navigate(0);
-                }}
-              />
-            </div>
-          </li>
-          <li
-            className={`Fifth MenuBannerDisplayLi SubMenu ${
-              activeCategory === 4 ? "active" : ""
-            }`}
-            onMouseEnter={() => handleSubMenuHover(4)}
-            onMouseLeave={handleCategoryLeave}
-          >
-            <div className="MenuBannerDisplayLiDiv">
-              {" "}
-              <img
-                src="/Assets/category_logos/sweet tooth.webp"
-                alt="test"
-                srcSet=""
-                onClick={() => {
-                  navigate("/search/156");
-                  navigate(0);
-                }}
-              />
-            </div>
-          </li>
-          <li
-            className={`Sixth MenuBannerDisplayLi SubMenu ${
-              activeCategory === 5 ? "active" : ""
-            }`}
-            onMouseEnter={() => handleSubMenuHover(5)}
-            onMouseLeave={handleCategoryLeave}
-          >
-            <div className="MenuBannerDisplayLiDiv">
-              {" "}
-              <img
-                src="/Assets/category_logos/sweet tooth.webp"
-                alt="test"
-                srcSet=""
-                onClick={() => {
-                  navigate("/search/156");
-                  navigate(0);
-                }}
-              />
-            </div>
-          </li>
-          <li
-            className={`Seventh MenuBannerDisplayLi SubMenu ${
-              activeCategory === 6 ? "active" : ""
-            }`}
-            onMouseEnter={() => handleSubMenuHover(6)}
-            onMouseLeave={handleCategoryLeave}
-          >
-            <div className="MenuBannerDisplayLiDiv">
-              <img
-                src="/Assets/category_logos/sweet tooth.webp"
-                alt="test"
-                srcSet=""
-                onClick={() => {
-                  navigate("/search/156");
-                  navigate(0);
-                }}
-              />
-            </div>
-          </li>
+          {categoriesData?.map((item, index) => {
+            if (index < 7) {
+              return (
+                <li className="MenuBannerLi" id="Third" key={index}>
+                  <Link
+                    className={`${
+                      activeCategory === 2 ? "activeCate" : ""
+                    } HoverEffectLink MenuBannerLink`}
+                  >
+                    <p className="HoverEffectLinkPara MenuBannerPara">
+                      {item.categoryName}
+                    </p>
+                  </Link>
+                </li>
+              );
+            }
+          })}
         </ul>
       </div>
     </header>

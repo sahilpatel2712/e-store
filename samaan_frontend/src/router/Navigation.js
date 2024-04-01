@@ -7,6 +7,7 @@ import Cart from "../pages/cart/Cart";
 import Error404 from "../pages/Error/404";
 
 import { BrowserRouter, Route, Routes } from "react-router-dom";
+import Orders from "../Components/Orders";
 
 const Navigation = () => {
   return (
@@ -16,6 +17,8 @@ const Navigation = () => {
           {PublicRoutes()}
           <Route element={<ProtectedRoutes />}>
             <Route path="/cart" element={<Cart />} />
+            <Route path="/orders" element={<Orders />} />
+            
           </Route>
         </Route>
 

@@ -1,25 +1,25 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { SkeletOnPrice } from "../../Components/Skeletons";
 import Skeleton from "react-loading-skeleton";
 import { useNavigate, useParams } from "react-router-dom";
 import UserReviews from "../../Components/UserReviews";
 import { useSelector, useDispatch } from "react-redux";
 import { addOrUpdateUserCart } from "../../redux/reducers/cart";
+import { addFeedback, getFeedback } from "../../redux/reducers/feedback";
 
 const ProductDetails = () => {
   const { id } = useParams();
   const Data = useSelector((state) =>
     state.products.productsData.find((product) => product.productId == id)
   );
+  const { feedbacksData } = useSelector((state) => state.feedback);
   const auth = useSelector((state) => state.auth);
   const dispatch = useDispatch();
   const [hover, setHover] = React.useState(null);
   const [rating, setRating] = React.useState(0);
   const [ReviewText, setReviewText] = React.useState("");
-  const [Reviews, setReviews] = React.useState([]);
   const [averageReview, setAverageReview] = React.useState(0);
   const { navigate } = useNavigate();
-
   const handleProductAdd = (productId) => {
     if (auth.isAuthenticated) {
       dispatch(
@@ -33,13 +33,33 @@ const ProductDetails = () => {
       navigate("/login");
     }
   };
-
   const handleAddReview = () => {
     if (auth.isAuthenticated) {
+      let feedbackData = {
+        ratings: rating,
+        reviews: ReviewText,
+        productId: id,
+        userId: auth.user.userId,
+      };
+      dispatch(addFeedback(feedbackData));
+      setReviewText("");
+      setRating(0);
     } else {
       navigate("/login");
     }
   };
+  useEffect(() => {
+    dispatch(getFeedback(id));
+  }, []);
+  useEffect(() => {
+    const sumRatings = feedbacksData.reduce(
+      (acc, feedback) => acc + feedback.ratings,
+      0
+    );
+    const averageRatings = sumRatings / feedbacksData.length;
+    setAverageReview(averageRatings);
+  }, [feedbacksData]);
+
   return (
     <div>
       <div className="w-[100%] h-[100%] outer">
@@ -230,9 +250,9 @@ const ProductDetails = () => {
                     Reviews from customers
                   </h1>
 
-                  {Reviews.length > 0 ? (
-                    Reviews.map((review, index) => {
-                      return <UserReviews key={index} review={review} />;
+                  {feedbacksData.length > 0 ? (
+                    feedbacksData.map((feedback, index) => {
+                      return <UserReviews key={index} review={feedback} />;
                     })
                   ) : (
                     <h1>No Reviews Available</h1>

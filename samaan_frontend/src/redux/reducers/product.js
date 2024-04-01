@@ -18,7 +18,9 @@ const { setProduct } = productReducer.actions;
 export const getProduct = () => {
   return async (dispatch) => {
     try {
-      let response = await axios.get(process.env.REACT_APP_GET_PRODUCTS);
+      let response = await axios.get(
+        `${process.env.REACT_APP_BASE_URL}/products`
+      );
       dispatch(setProduct(response.data));
     } catch (error) {
       console.log(error);
@@ -30,7 +32,7 @@ export const updateProduct = (data) => {
   return async (dispatch, getState) => {
     try {
       let response = await axios.post(
-        `${process.env.REACT_APP_GET_PRODUCT_UPDATE}${data.productId}`,
+        `${process.env.REACT_APP_BASE_URL}/products/update/${data.productId}`,
         { data }
       );
       let state = getState();

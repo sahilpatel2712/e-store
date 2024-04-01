@@ -16,7 +16,6 @@ module.exports = {
       if (orders.length === 0) {
         return res.status(404).json({ error: "No orders found" });
       }
-
       res.json(orders);
     } catch (error) {
       console.error("Error getting order details:", error);
@@ -26,12 +25,11 @@ module.exports = {
 
   addOrders: async (req, res, next) => {
     try {
-      const { userId, productId, orderInfo, orderAddress, total, status } =
+      const { userId, orderInfo, orderAddress, total, status } =
         req.body;
 
       const newOrder = await OrderModel.create({
         userId,
-        productId,
         orderInfo,
         orderAddress,
         total,

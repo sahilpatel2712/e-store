@@ -1,61 +1,124 @@
-import React from "react";
-// import AuthContext from "../context/Auth";
+import React, { useEffect, useState } from "react";
 import CartCard from "../../Components/CartCard";
 
 import { SkeletonCart } from "../../Components/Skeletons";
+import { useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  addOrUpdateUserCart,
+  getUserCartData,
+} from "../../redux/reducers/cart";
+import { Button, FormGroup, Input, Label } from "reactstrap";
+import { userUpdate } from "../../redux/reducers/auth";
+import { addOrder } from "../../redux/reducers/order";
 
 const Cart = () => {
-  //   const navigate = useNavigate();
-  //   const { authTokens, updateToken } = React.useContext(AuthContext);
-  const [cartData, setCartData] = React.useState([]);
+  const navigate = useNavigate();
+  const { cartData } = useSelector((state) => state.cart);
+  const { isAuthenticated, user } = useSelector((state) => state.auth);
+  const { productsData } = useSelector((state) => state.products);
+  const dispatch = useDispatch();
   const [FetchState, setFetchState] = React.useState(false);
   const [total, setTotal] = React.useState(0);
+  const [data, setData] = React.useState([]);
+  const [address, setAddress] = useState("");
+  const { categoriesData } = useSelector((state) => state.categories);
+  const [isEdit, setEdit] = useState(false);
 
-  //   const fetchCart = async () => {
-  //     if (authTokens) {
-  //       const response = await fetch(
-  //         "https://api-krudra9125-gmailcom.vercel.app/api/cart/",
-  //         {
-  //           method: "GET",
-  //           headers: {
-  //             "Content-Type": "application/json",
-  //             Authorization: `Bearer ${authTokens["access"]}`,
-  //           },
-  //         }
-  //       );
-  //       const data = await response.json();
-  //       if (data["detail"]) {
-  //         setFetchState(false);
-  //         await updateToken().then(() => {
-  //           fetchCart();
-  //         });
-  //       } else {
-  //         setFetchState(true);
-  //         setCartData(data);
-  //         console.log(data);
-  //       }
-  //     }
-  //   };
-
-  //   React.useEffect(() => {
-  //     window.scrollTo(0, 0);
-  //     fetchCart();
-  //   }, []);
-  //   React.useEffect(() => {
-  //     let sum = 0;
-  //     cartData?.map((item) => {
-  //       console.log(sum, item["product"]["price"], item["quantity"]);
-  //       sum = sum + item["product"]["price"] * item["quantity"];
-  //       return null;
-  //     });
-  //     console.log(sum);
-  //     setTotal(sum);
-  //   }, [cartData]);
-
-  const changeSubtotal = (value) => {
-    const newTotal = total + value;
-    setTotal(newTotal);
+  const handleChangeQuantity = (quantity, productId) => {
+    dispatch(
+      addOrUpdateUserCart({
+        userId: user.userId,
+        productId: productId,
+        quantity: quantity,
+      })
+    );
   };
+
+  const handleChangeAddress = (e) => {
+    setAddress(e.target.value);
+  };
+
+  const filterCartData = () => {
+    const productsInCart = cartData
+      .map((cartItem) => {
+        const product = productsData.find(
+          (product) => product.productId === cartItem.productId
+        );
+        if (product) {
+          return {
+            cartId: cartItem.cartId,
+            quantity: cartItem.quantity,
+            userId: cartItem.userId,
+            productId: cartItem.productId,
+            productName: product.productName,
+            productPrice: product.productPrice,
+            productImage: product.productImage,
+          };
+        } else {
+          return null;
+        }
+      })
+      .filter(Boolean);
+    setData(productsInCart);
+    setFetchState(true);
+  };
+  const getCategoryName = (categoryId) => {
+    const category = categoriesData.find(
+      (category) => category.categoryId === categoryId
+    );
+    return category ? category.categoryName : "";
+  };
+
+  const handleBuy = () => {
+    const productIdsInCart = cartData.map((cartItem) => cartItem.productId);
+    let productsInCart = productsData.filter((product) =>
+      productIdsInCart.includes(product.productId)
+    );
+    productsInCart = productsInCart.map((product) => {
+      const cartItem = cartData.find(
+        (item) => item.productId === product.productId
+      );
+      return {
+        ...product,
+        quantity: cartItem.quantity,
+      };
+    });
+    productsInCart = productsInCart.map((product) => ({
+      ...product,
+      categoryName: getCategoryName(product.categoryId),
+    }));
+
+    let orderObject = {
+      userId: user.userId,
+      orderAddress: user.address,
+      total: total,
+      orderInfo: productsInCart,
+      status: "ORDERED",
+    };
+
+    dispatch(addOrder(orderObject))
+  };
+
+  useEffect(() => {
+    if (!isAuthenticated) {
+      navigate("/login");
+    } else {
+      if (user) {
+        dispatch(getUserCartData(user.userId));
+      }
+      setAddress(user?.address);
+    }
+  }, [user]);
+  useEffect(() => {
+    filterCartData();
+  }, [cartData]);
+  useEffect(() => {
+    const totalPrice = data.reduce((total, cartItem) => {
+      return total + cartItem.productPrice * cartItem.quantity;
+    }, 0);
+    setTotal(totalPrice);
+  }, [data, cartData]);
 
   return (
     <div className="w-[100%] min-h-[100vh] mt-[8rem]">
@@ -67,16 +130,16 @@ const Cart = () => {
           <hr />
           <div className="CartWrapper">
             {FetchState ? (
-              cartData && cartData.length !== 0 ? (
-                cartData.map((item) => {
+              data && data.length !== 0 ? (
+                data.map((item) => {
                   return (
                     <CartCard
-                      productId={item["product"]["id"]}
-                      name={item["product"]["name"]}
-                      price={item["product"]["price"]}
-                      imagSrc={item["product"]["img_path"]}
-                      Quantity={item["quantity"]}
-                      changeQuantity={changeSubtotal}
+                      productId={item.productId}
+                      name={item.productName}
+                      price={item.productPrice}
+                      imagSrc={item.productImage}
+                      Quantity={item.quantity}
+                      handleChangeQuantity={handleChangeQuantity}
                     />
                   );
                 })
@@ -97,10 +160,41 @@ const Cart = () => {
                 Subtotal : <span>{total}</span>
               </p>
             </div>
-            <button>Proceed To Buy</button>
+            <button onClick={handleBuy}>Proceed To Buy</button>
           </div>
         </div>
       </div>
+      <FormGroup className="mx-5" style={{ width: "50%", marginTop: 60 }}>
+        <Label
+          for="exampleText"
+          className="ms-4"
+          style={{ fontSize: "x-large", fontWeight: 700 }}
+        >
+          Address
+        </Label>
+        <div className="d-flex gap-3" style={{ alignItems: "center" }}>
+          <Input
+            type="textarea"
+            name="text"
+            id="exampleText"
+            value={address}
+            style={{ padding: "3%", alignItems: "center" }}
+            disabled={!isEdit}
+            onChange={handleChangeAddress}
+          />
+          <Button
+            style={{ height: "fit-content", minWidth: 80 }}
+            onClick={() => {
+              if (isEdit) {
+                dispatch(userUpdate({ ...user, address: address }));
+              }
+              setEdit((prev) => !prev);
+            }}
+          >
+            {isEdit ? "Update" : "Edit"}
+          </Button>
+        </div>
+      </FormGroup>
     </div>
   );
 };

@@ -1,10 +1,7 @@
 import React, { useState } from "react";
 
-
-
-
-const UserReviews = ({index,review}) => {
-  const [rating, setRating] = useState(review?.rating);
+const UserReviews = ({ index, review }) => {
+  const [rating, setRating] = useState(review?.ratings);
   const [hover, setHover] = useState(0);
   return (
     <div className="UserReviewOuter">
@@ -31,15 +28,13 @@ const UserReviews = ({index,review}) => {
         })}
       </div>
       <div className="UserReviewHeader">
-        <div className="UserPhoto"></div>
-        <p className="UserName">{review?.username}</p>
-
+        <p className="UserName">{review?.User?.name}</p>
       </div>
       <div className="UserReviewStatement">
-        <p>{review?.comment}</p>
+        <p>{review?.reviews}</p>
       </div>
       <div className="ReviewDate">
-        <p>{new Date(review?.created_at).toLocaleString()}</p>
+        <p>{new Date(review?.createdAt).toLocaleString()}</p>
       </div>
     </div>
   );

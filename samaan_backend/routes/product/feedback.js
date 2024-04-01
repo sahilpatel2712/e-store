@@ -10,7 +10,7 @@ const {
 const router = express.Router();
 
 router.get("/feedback", getFeedback);
-router.get("/feedback/:feedbackId", getFeedbackById);
+router.get("/feedback/:productId", getFeedbackById);
 router.post("/feedback/add", addFeedback);
 router.post("/feedback/update/:feedbackId", updateFeedback);
 router.post("/feedback/delete/:feedbackId", deleteFeedback);

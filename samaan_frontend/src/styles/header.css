@@ -201,7 +201,7 @@ html {
     padding: 0 0;
     margin: 0 34px;
     list-style: none;
-    justify-content: space-between;
+    justify-content:space-around;
 }
 
 .MenuBannerLi{

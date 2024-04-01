@@ -1,8 +1,13 @@
 import React from "react";
 import { IoIosArrowForward } from "react-icons/io";
 import DealsDiv from "./DealsDiv.jsx";
+import { useNavigate } from "react-router-dom";
 
 const ProductsDiv = ({ Category, categoryId }) => {
+  const navigate = useNavigate();
+  const handleClick = () => {
+    navigate("/category/"+categoryId);
+  };
   return (
     <div className=" w-[100%] min-h-[30rem]  flex justify-center items-center ">
       <div
@@ -16,7 +21,10 @@ const ProductsDiv = ({ Category, categoryId }) => {
             </span>
           </div>
           <div>
-            <button className="bg-yellow-300 text-black   md:w-[auto]  flex rounded-xl shadow-lg md:text-2xl  items-center py-2 px-2 font-bold  text-center  ">
+            <button
+              onClick={handleClick}
+              className="bg-yellow-300 text-black   md:w-[auto]  flex rounded-xl shadow-lg md:text-2xl  items-center py-2 px-2 font-bold  text-center  "
+            >
               <span>see all</span>
               <IoIosArrowForward />
             </button>

@@ -11,50 +11,6 @@ const DealsDiv = ({ category, categoryId }) => {
   const [swiper, setSwiper] = React.useState(null);
   const { productsData } = useSelector((state) => state.products);
 
-  // const [data, setData] = React.useState();
-
-  // const { authTokens } = React.useContext(AuthContext);
-  // const fetchData = async () => {
-  //   if (authTokens) {
-  //     console.log("category with auth token");
-  //     await fetch(
-  //       `https://api-krudra9125-gmailcom.vercel.app/api/products/${category}`,
-  //       {
-  //         method: "GET",
-  //         headers: {
-  //           "Content-Type": "application/json",
-  //           Authorization: `Bearer ${authTokens["access"]}`,
-  //         },
-  //       }
-  //     )
-  //       .then((res) => res.json())
-  //       .then((data) => {
-  //         console.log(data);
-  //         setData(data);
-  //       })
-  //       .catch((err) => console.log(err));
-  //   } else {
-  //     await fetch(
-  //       `https://api-krudra9125-gmailcom.vercel.app/api/products/${category}`,
-  //       {
-  //         method: "GET",
-  //         headers: {
-  //           "Content-Type": "application/json",
-  //         },
-  //       }
-  //     )
-  //       .then((res) => res.json())
-  //       .then((data) => {
-  //         console.log(data);
-  //         setData(data);
-  //       })
-  //       .catch((err) => console.log(err));
-  //   }
-  // };
-  // React.useLayoutEffect(() => {
-  //   fetchData();
-  // }, []);
-
   const breakpoints = {
     320: {
       slidesPerView: 1,
@@ -105,6 +61,7 @@ const DealsDiv = ({ category, categoryId }) => {
                     category={category}
                     categoryId={categoryId}
                     productId={item.productId}
+                    quantity={item.productQuantity}
                   />
                 </SwiperSlide>
               );

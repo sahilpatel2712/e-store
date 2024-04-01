@@ -17,7 +17,9 @@ const { setCategory } = categoryReducer.actions;
 
 export const getCategory = () => {
   return async (dispatch) => {
-    let response = await axios.get(process.env.REACT_APP_GET_CATEGORIES);
+    let response = await axios.get(
+      `${process.env.REACT_APP_BASE_URL}/category`
+    );
     dispatch(setCategory(response.data));
   };
 };

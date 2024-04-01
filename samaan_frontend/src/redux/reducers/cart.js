@@ -19,9 +19,9 @@ export const getUserCartData = (userId) => {
   return async (dispatch, getState) => {
     try {
       let response = await axios.get(
-        `${process.env.REACT_APP_USER_CART_DATA}${userId}`
+        `${process.env.REACT_APP_BASE_URL}/cart/${userId}`
       );
-        dispatch(setCart(response.data));
+      dispatch(setCart(response.data));
     } catch (error) {
       console.log(error);
     }
@@ -31,9 +31,12 @@ export const getUserCartData = (userId) => {
 export const addOrUpdateUserCart = (data) => {
   return async (dispatch, getState) => {
     try {
-      let response = await axios.post(process.env.REACT_APP_USER_CART_ADD, {
-        data,
-      });
+      let response = await axios.post(
+        `${process.env.REACT_APP_BASE_URL}/cart/add`,
+        {
+          data,
+        }
+      );
       getUserCartData(response.data.userId);
     } catch (error) {
       console.log(error);

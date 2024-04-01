@@ -10,6 +10,10 @@ const cartController = {
         cart = await CartModel.create({ userId, productId, quantity });
         return res.status(201).json(cart);
       }
+      if (cart.quantity + quantity === 0) {
+        await CartModel.destroy({ where: { cartId: cart.cartId } });
+        return res.status(200).json({ message: "Cart deleted successfully" });
+      }
 
       cart.quantity += quantity;
       await cart.save();

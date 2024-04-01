@@ -1,6 +1,5 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import AuthContext from "../context/Auth";
 import { useNavigate } from "react-router-dom";
 const ProductCard = ({
   cartQuantity,
@@ -14,25 +13,24 @@ const ProductCard = ({
   const [quantity, setQuantity] = React.useState(
     cartQuantity !== undefined ? cartQuantity : 0
   );
-  const { authTokens } = React.useContext(AuthContext);
   const navigate = useNavigate();
-  const changeQuantity = async (q) => {
-    if (authTokens["access"]) {
-      const response = await fetch(
-        "https://api-krudra9125-gmailcom.vercel.app/api/cart/",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${authTokens["access"]}`,
-          },
-          body: JSON.stringify({ product: productId, quantity: q }),
-        }
-      );
-      const data = await response.json();
-      console.log(data);
-    }
-  };
+  // const changeQuantity = async (q) => {
+  //   if (authTokens["access"]) {
+  //     const response = await fetch(
+  //       "https://api-krudra9125-gmailcom.vercel.app/api/cart/",
+  //       {
+  //         method: "POST",
+  //         headers: {
+  //           "Content-Type": "application/json",
+  //           Authorization: `Bearer ${authTokens["access"]}`,
+  //         },
+  //         body: JSON.stringify({ product: productId, quantity: q }),
+  //       }
+  //     );
+  //     const data = await response.json();
+  //     console.log(data);
+  //   }
+  // };
   return (
     <div style={{ display: "flex", justifyContent: "center" }}>
       <div className=" w-[15rem] h-[20rem]   flex flex-col  bg-white  items-center justify-end  rounded-[1.2rem] box-border  ">
@@ -81,7 +79,7 @@ const ProductCard = ({
                         onClick={() => {
                           if (quantity > 0) {
                             setQuantity(quantity - 1);
-                            changeQuantity(-1);
+                            // changeQuantity(-1);
                           } else {
                             setQuantity(0);
                           }
@@ -99,7 +97,7 @@ const ProductCard = ({
                         className="bg-white w-[1.7em] h-[1.7rem] text-center font-[900] text-green-800  rounded-full cursor-pointer "
                         onClick={() => {
                           setQuantity(quantity + 1);
-                          changeQuantity(1);
+                          // changeQuantity(1);
                         }}
                       >
                         +
@@ -110,12 +108,12 @@ const ProductCard = ({
                   <button
                     className="w-[70%] h-[90%]  shadow-md rounded-md bg-white text-green-800 text-xs font-bold "
                     onClick={() => {
-                      if (authTokens) {
-                        setQuantity(quantity + 1);
-                        changeQuantity(1);
-                      } else {
-                        navigate("/signup");
-                      }
+                      // if (authTokens) {
+                      //   setQuantity(quantity + 1);
+                      //   changeQuantity(1);
+                      // } else {
+                      //   navigate("/signup");
+                      // }
                     }}
                   >
                     {" "}

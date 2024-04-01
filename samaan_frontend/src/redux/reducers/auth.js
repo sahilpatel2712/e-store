@@ -29,7 +29,7 @@ export const userCreate = (data) => {
   return async (dispatch) => {
     try {
       let response = await axios.post(
-        process.env.REACT_APP_USER_REGISTRATION,
+        `${process.env.REACT_APP_BASE_URL}/registration`,
         data
       );
       console.log(response);
@@ -46,7 +46,10 @@ export const userCreate = (data) => {
 export const userLog = (data) => {
   return async (dispatch) => {
     try {
-      let response = await axios.post(process.env.REACT_APP_USER_LOGIN, data);
+      let response = await axios.post(
+        `${process.env.REACT_APP_BASE_URL}/login`,
+        data
+      );
       localStorage.setItem("userAuthToken", response.data.authToken);
       dispatch(setUser(response.data.userData));
       dispatch(setToken(response.data.authToken));
@@ -65,12 +68,21 @@ export const userOut = () => {
     dispatch(setAuthenticated(false));
   };
 };
+export const userUpdate = (data) => {
+  return async (dispatch) => {
+    let response = await axios.post(
+      `${process.env.REACT_APP_BASE_URL}/address-update`,
+      { address: data.address, userId: data.userId }
+    );
+    dispatch(setUser(data));
+  };
+};
 
 export const userAuth = (data) => {
   return async (dispatch) => {
     try {
       let response = await axios.post(
-        process.env.REACT_APP_USER_AUTH,
+        `${process.env.REACT_APP_BASE_URL}/authorization`,
         {},
         { headers: { authorization: data.token } }
       );

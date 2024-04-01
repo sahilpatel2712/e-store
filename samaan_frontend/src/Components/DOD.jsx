@@ -7,7 +7,6 @@ import "swiper/css";
 // import "swiper/css/navigation";
 import "swiper/css/pagination";
 import "swiper/css/scrollbar";
-import productDetails from "../context/productDetails";
 // import AuthContext from "../context/Auth";
 const DOD = () => {
   const [swiper, setSwiper] = React.useState(null);

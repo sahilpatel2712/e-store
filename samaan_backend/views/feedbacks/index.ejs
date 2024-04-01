@@ -3,7 +3,6 @@
     <div class="card card-info card-outline">
       <div class="card-header">
         <h3 class="card-title">List of Feedbacks</h3>
-  
       </div>
       <div class="card-body">
         <div class="row">
@@ -19,14 +18,13 @@
                   <th>Rating</th>
                   <th>Review</th>
                   <th>Action</th>
-
                 </tr>
               </thead>
               <tbody>
                 <% items.forEach((item) => { %>
                 <tr>
-                  <td><%= item.productName %></td>
-             
+                  <td><%= item.Product.productName %></td>
+
                   <td><%= item.userId %></td>
                   <td><%= item.ratings %></td>
                   <td><%= item.reviews %></td>
