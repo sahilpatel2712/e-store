@@ -165,7 +165,7 @@ const Header = () => {
                 navigate("/signup");
               }}
             >
-              <p>Login/signup</p>
+              <p className="m-0">Login/signup</p>
             </div>
           )}
           <div

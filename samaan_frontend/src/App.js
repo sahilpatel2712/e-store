@@ -18,6 +18,7 @@ import "./styles/onSearch.css";
 import "./styles/onSearchLeft.css";
 import "./styles/onSearchRight.css";
 import "./styles/header.css";
+import "./styles/stepProgress.css";
 
 import { useDispatch, useSelector } from "react-redux";
 import { userAuth } from "./redux/reducers/auth";

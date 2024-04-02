@@ -23,7 +23,7 @@ const OrderModel = sequelize.define(
       allowNull: false,
     },
     status: {
-      type: DataTypes.ENUM("ORDERED", "SHIPPED", "DELIVERED"),
+      type: DataTypes.ENUM("ORDERED", "SHIPPED", "DELIVERED","CANCELLED"),
       allowNull: false,
     },
   },

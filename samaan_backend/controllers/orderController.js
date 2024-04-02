@@ -25,8 +25,7 @@ module.exports = {
 
   addOrders: async (req, res, next) => {
     try {
-      const { userId, orderInfo, orderAddress, total, status } =
-        req.body;
+      const { userId, orderInfo, orderAddress, total, status } = req.body;
 
       const newOrder = await OrderModel.create({
         userId,
@@ -36,10 +35,10 @@ module.exports = {
         status,
       });
 
-      res.status(201).json(newOrder);
+      res.json(newOrder);
     } catch (error) {
       console.error("Error adding order:", error);
-      res.status(500).json({ error: "Internal Server Error" });
+      res.json({ error: "Internal Server Error" });
     }
   },
 };

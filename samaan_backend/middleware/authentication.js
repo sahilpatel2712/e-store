@@ -4,7 +4,7 @@ const UserModel = require("../models/userModel");
 const authenticateUser = async (req, res, next) => {
   try {
     const token = req.headers.authorization;
-
+    console.log(req.headers);
     if (!token) {
       return res.status(401).json({ error: "Unauthorized: No token provided" });
     }
@@ -21,7 +21,6 @@ const authenticateUser = async (req, res, next) => {
     console.error("Error authenticating user:", error);
     return res.status(500).json({ error: "Internal Server Error" });
   }
-  next()
 };
 
 module.exports = { authenticateUser };

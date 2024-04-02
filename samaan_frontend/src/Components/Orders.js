@@ -2,104 +2,203 @@ import React, { useState } from "react";
 import { Button, Card, CardBody, Collapse } from "reactstrap";
 import Down from "../aseets/icons/Down";
 import Up from "../aseets/icons/Up";
+import { useDispatch, useSelector } from "react-redux";
+import Order, { getUserOrderData } from "../redux/reducers/order";
 
-const Orders = () => {
+const CancelledProgress = () => {
+  return (
+    <div class="stepper-wrapper">
+      <div class={`stepper-item stepper-cancel-item`}>
+        <div class="step-counter step-cancel-counter bg-danger ">1</div>
+        <div class="step-name text-danger ">Cacncelled</div>
+      </div>
+      <div class={`stepper-item stepper-cancel-item`}>
+        <div class="step-counter step-cancel-counter bg-danger ">2</div>
+        <div class="step-name text-danger ">Cacncelled</div>
+      </div>
+      <div class={`stepper-item stepper-cancel-item`}>
+        <div class="step-counter step-cancel-counter bg-danger ">3</div>
+        <div class="step-name text-danger ">Cacncelled</div>
+      </div>
+    </div>
+  );
+};
+
+const StepProgress = ({ step }) => {
+  return (
+    <div class="stepper-wrapper">
+      <div
+        class={`stepper-item ${
+          step === "ORDERED" || step === "SHIPPED" || step === "DELIVERED"
+            ? "completed"
+            : ""
+        }`}
+      >
+        <div class="step-counter">1</div>
+        <div class="step-name">Ordered</div>
+      </div>
+      <div
+        class={`stepper-item ${
+          step === "ORDERED"
+            ? "active"
+            : step === "DELIVERED" || step === "SHIPPED"
+            ? "completed"
+            : ""
+        }`}
+      >
+        <div class="step-counter">2</div>
+        <div class="step-name">Shipped</div>
+      </div>
+      <div
+        class={`stepper-item ${
+          step === "SHIPPED"
+            ? "active"
+            : step === "DELIVERED"
+            ? "completed"
+            : ""
+        }`}
+      >
+        <div class="step-counter">3</div>
+        <div class="step-name">Delivered</div>
+      </div>
+    </div>
+  );
+};
+
+const ProductInfo = ({ product }) => {
+  return (
+    <div className="d-flex justify-content-between">
+      <div className="w-100">
+        <div className="ProductInfo">
+          <h2>Product Information</h2>
+          <div className="w-[100%] flex flex-col md:flex-row justify-start">
+            <div className="w-[100%]">
+              <div className="ProductTable">
+                <div className="ProductTableRow">
+                  <div className="ProductTableTd1">WEIGHT</div>
+                  <div className="ProductTableTd2">{product.productWeight}</div>
+                </div>
+                <div className="ProductTableRow">
+                  <div className="ProductTableTd1">FLAVOUR</div>
+                  <div className="ProductTableTd2">
+                    {product.productFlavour}
+                  </div>
+                </div>
+                <div className="ProductTableRow">
+                  <div className="ProductTableTd1">CATEGORY</div>
+                  <div className="ProductTableTd2">{product.categoryName}</div>
+                </div>
+              </div>
+            </div>
+            <div style={{ width: "100px", height: "100px" }}>
+              <img src={product.productImage} alt="product" className="w-100" />
+            </div>
+          </div>
+        </div>
+
+        <div className="DescHeader">
+          <h3>Description</h3>
+          <p className="three-line-elipsis">{product.productDescription}</p>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+const OrderDetails = ({ order }) => {
   const [isOpen, setIsOpen] = useState(false);
 
   const toggle = () => setIsOpen(!isOpen);
+
+  return (
+    <div
+      style={{
+        backgroundColor: "#F5F6F8",
+        borderRadius: 10,
+        padding: "2%",
+        boxShadow: "0 0 10px rgba(0, 0, 0, 0.1)",
+      }}
+    >
+      <div className="d-flex justify-content-end">
+        <p
+          onClick={() => setIsOpen(!isOpen)}
+          className="NavImageWrapper bg-yellow-300  rounded-2xl CartContent   w-[3rem] h-[3rem]  hover:shadow-md transition-all duration-500  ease-in-out  VCenter-flex"
+        >
+          {isOpen ? <Up /> : <Down />}
+        </p>
+      </div>
+      <div class="card-body">
+        <dl class="row">
+          <dt class="col-sm-4">Name</dt>
+          <dd class="col-sm-8">{order.name}</dd>
+
+          <dt class="col-sm-4">Address</dt>
+          <dd class="col-sm-8 text-breck">{order.orderAddress}</dd>
+          <dt class="col-sm-4">Order Status</dt>
+          <dd
+            class="col-sm-8"
+            style={{
+              color: order.status === "CANCELLED" ? "#e04f5d" : "#ffc107",
+              fontWeight: "bold",
+            }}
+          >
+            {order.status}
+          </dd>
+          <dt class="col-sm-4">Total</dt>
+          <dd
+            class="col-sm-8"
+            style={{ fontWeight: "bold", fontSize: "larger" }}
+          >
+            ₹ {order.total}
+          </dd>
+          <dt class="col-sm-4">Order Time</dt>
+          <dd class="col-sm-8">{new Date(order.createdAt).toLocaleString()}</dd>
+        </dl>
+      </div>
+      {order.status === "CANCELLED" ? (
+        <CancelledProgress />
+      ) : (
+        <StepProgress step={order.status} />
+      )}
+      <Collapse isOpen={isOpen}>
+        <Card>
+          <CardBody className="px-5">
+            {order.orderInfo.map((product) => {
+              return <ProductInfo product={product} />;
+            })}
+          </CardBody>
+        </Card>
+      </Collapse>
+    </div>
+  );
+};
+
+const Orders = () => {
+  const dispatch = useDispatch();
+  const auth = useSelector((state) => state.auth);
+  const orderData = useSelector((state) => state.order);
+
+  React.useEffect(() => {
+    dispatch(getUserOrderData(auth.user.userId));
+    console.log(auth);
+  }, []);
+
+  React.useEffect(() => {
+    console.log(orderData, "orderData");
+  }, [orderData]);
+
   return (
     <div className="w-[100%] min-h-[100vh] mt-[10rem] d-flex flex-column px-5">
       <div className="CartHeader">
         <h1>Shopping Order :</h1>
       </div>
-      <div
-        style={{
-          backgroundColor: "#F5F6F8",
-          borderRadius: 10,
-          padding: "2%",
-          boxShadow: "0 0 10px rgba(0, 0, 0, 0.1)",
-        }}
-      >
-        <div className="d-flex justify-content-end">
-          <p
-            onClick={() => setIsOpen(!isOpen)}
-            className="NavImageWrapper bg-yellow-300  rounded-2xl CartContent   w-[3rem] h-[3rem]  hover:shadow-md transition-all duration-500  ease-in-out  VCenter-flex"
-          >
-            {isOpen ? <Up /> : <Down />}
-          </p>
-        </div>
-        <div class="card-body">
-          <dl class="row">
-            <dt class="col-sm-4">Name</dt>
-            <dd class="col-sm-8">sahil patel</dd>
-
-            <dt class="col-sm-4">Address</dt>
-            <dd class="col-sm-8 text-breck">
-              a-304 nilkanth avenue vstral,ahmedabad,382340
-            </dd>
-            <dt class="col-sm-4">Order Status</dt>
-            <dd
-              class="col-sm-8"
-              style={{ color: "#ffc107", fontWeight: "bold" }}
-            >
-              SHIPPED
-            </dd>
-            <dt class="col-sm-4">Total</dt>
-            <dd
-              class="col-sm-8"
-              style={{ fontWeight: "bold", fontSize: "larger" }}
-            >
-              ₹ 165
-            </dd>
-            <dt class="col-sm-4">Order Time</dt>
-            <dd class="col-sm-8">
-              Wed Mar 13 2024 14:18:57 GMT+0530 (India Standard Time)
-            </dd>
-          </dl>
-        </div>
-        <Collapse isOpen={isOpen}>
-          <Card>
-            <CardBody className="px-5">
-              <div className="d-flex justify-content-between">
-                <div>
-                  <div className="ProductInfo">
-                    <h2>Product Information</h2>
-                    <div className="w-[100%] flex flex-col md:flex-row justify-start">
-                      <div className="w-[100%]">
-                        <div className="ProductTable">
-                          <div className="ProductTableRow">
-                            <div className="ProductTableTd1">WEIGHT</div>
-                            <div className="ProductTableTd2">
-                              30g
-                            </div>
-                          </div>
-                          <div className="ProductTableRow">
-                            <div className="ProductTableTd1">FLAVOUR</div>
-                            <div className="ProductTableTd2">
-                            Chocolate
-                            </div>
-                          </div>
-                          <div className="ProductTableRow">
-                            <div className="ProductTableTd1">CATEGORY</div>
-                            <div className="ProductTableTd2">
-                              category
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div className="DescHeader">
-                    <h3>Description</h3>
-                    <p>loremkjdkjsdfkjh</p>
-                  </div>
-                </div>
-                <div>productImage</div>
-              </div>
-            </CardBody>
-          </Card>
-        </Collapse>
+      <div className="d-flex flex-column gap-4">
+        {orderData.orderData.map((order, index) => (
+          <OrderDetails
+            key={index}
+            order={{ ...order, name: auth.user.name }}
+          />
+        ))}
       </div>
     </div>
   );

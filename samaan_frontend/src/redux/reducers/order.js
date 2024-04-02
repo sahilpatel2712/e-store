@@ -21,8 +21,10 @@ export const getUserOrderData = (userId) => {
       let { token } = getState().auth;
       const Headers = { authorization: token };
       let response = await axios.get(
-        `${process.env.REACT_APP_BASE_URL}/user/${userId}/order`,
-        Headers
+        `${process.env.REACT_APP_BASE_URL}/orders/user/${userId}/order`,
+        {
+          headers: Headers,
+        }
       );
       dispatch(setOrder(response.data));
     } catch (error) {
@@ -37,9 +39,11 @@ export const addOrder = (data) => {
       let { token } = getState().auth;
       const Headers = { authorization: token };
       let response = await axios.post(
-        `${process.env.REACT_APP_BASE_URL}/order/add`,
-        Headers,
-        data
+        `${process.env.REACT_APP_BASE_URL}/orders/order/add`,
+        data,
+        {
+          headers: Headers,
+        }
       );
       getUserOrderData(response.data.userId);
     } catch (error) {
