@@ -123,12 +123,7 @@
   .ImageCart {
     padding: 0px 0px;
   }
-  .CartDetails {
-    width: fit-content;
-  }
-  .CartCardOuter {
-    height: 200px;
-  }
+ 
 }
 
 @media screen and (max-width: 425px) {

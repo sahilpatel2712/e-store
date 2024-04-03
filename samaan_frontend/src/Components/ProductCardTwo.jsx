@@ -2,7 +2,12 @@ import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
-import { addOrUpdateUserCart } from "../redux/reducers/cart";
+import cart, {
+  addOrUpdateUserCart,
+  getUserCartData,
+} from "../redux/reducers/cart";
+import Skeleton from "react-loading-skeleton";
+import axios from "axios";
 const ProductCardTwo = ({
   productId,
   imgSrc,
@@ -14,20 +19,56 @@ const ProductCardTwo = ({
   const navigate = useNavigate();
   const auth = useSelector((state) => state.auth);
   const dispatch = useDispatch();
+  const { cartData } = useSelector((state) => state.cart);
+  const [itemFoundInCart, setItemFoundInCart] = React.useState(null);
+  const [loading, setLoading] = React.useState(false);
 
-  const handleProductAdd = (productId) => {
-    if (auth.isAuthenticated) {
-      dispatch(
-        addOrUpdateUserCart({
+  const handleProductAdd = async (productId) => {
+    if (auth.isAuthenticated && auth.user) {
+      setLoading(true);
+      await axios.post(`${process.env.REACT_APP_BASE_URL}/cart/add`, {
+        data: {
           userId: auth.user.userId,
           productId: productId,
           quantity: 1,
-        })
-      );
+        },
+      });
+      dispatch(getUserCartData(auth.user.userId));
+      setLoading(false);
     } else {
       navigate("/login");
     }
   };
+
+  const handleChangeQuantity = async (quantity, productId) => {
+    setLoading(true);
+    await axios.post(`${process.env.REACT_APP_BASE_URL}/cart/add`, {
+      data: {
+        userId: auth.user.userId,
+        productId: productId,
+        quantity: quantity,
+      },
+    });
+    dispatch(getUserCartData(auth.user.userId));
+    setLoading(false);
+  };
+
+  React.useEffect(() => {
+    setItemFoundInCart(
+      cartData.find((item) => {
+        return item.productId === productId;
+      })
+    );
+    console.log("cartData", cartData);
+  }, [cartData]);
+
+  React.useEffect(() => {
+    if (auth.isAuthenticated) {
+      if (auth.user) {
+        dispatch(getUserCartData(auth.user.userId));
+      }
+    }
+  }, [auth.user]);
 
   return (
     <div className="flex justify-center">
@@ -78,13 +119,65 @@ const ProductCardTwo = ({
               <div className="TitleText">{name}</div>
               <div className="Stock">{weight}</div>
             </div>
-            <div className="price">
-              <div className="PriceText">{price}</div>
-              <div className="AddButton">
+            <div className="price d-flex justify-content-between pb-0  align-items-center ">
+              <div className="PriceText pb-0">{price}</div>
+              <div className="d-flex justify-content-center  align-items-center ">
                 <div className="w-[100%] h-[100%] flex justify-around">
-                  <button onClick={() => handleProductAdd(productId)}>
-                    ADD
-                  </button>
+                  {itemFoundInCart ? (
+                    <>
+                      <div className="px-2 d-flex align-items-center">
+                        {loading ? (
+                          <Skeleton width={20} height={20} />
+                        ) : (
+                          <button
+                            className="bg-yellow-300 text-black px-2 d-flex justify-content-center align-items-center "
+                            style={{
+                              borderRadius: "50%",
+                              height: "fit-content",
+                            }}
+                            onClick={() => {
+                              handleChangeQuantity(-1, productId);
+                            }}
+                          >
+                            -
+                          </button>
+                        )}
+                        <div className="d-flex justify-content-center align-items-center p-2">
+                          {loading ? (
+                            <Skeleton width={20} height={20} />
+                          ) : (
+                            itemFoundInCart.quantity
+                          )}
+                        </div>
+                        {loading ? (
+                          <Skeleton width={20} height={20} />
+                        ) : (
+                          <button
+                            className="bg-yellow-300 text-black px-2 d-flex justify-content-center align-items-center "
+                            style={{
+                              borderRadius: "50%",
+                              height: "fit-content",
+                            }}
+                            onClick={() => {
+                              handleChangeQuantity(1, productId);
+                            }}
+                          >
+                            +
+                          </button>
+                        )}
+                      </div>
+                    </>
+                  ) : loading ? (
+                    <Skeleton width={20} height={20} />
+                  ) : (
+                    <button
+                      className="px-3 bg-yellow-300 text-black px-2 d-flex justify-content-center align-items-center rounded"
+                      onClick={() => handleProductAdd(productId)}
+                      style={{ fontSize: "15px" }}
+                    >
+                      ADD
+                    </button>
+                  )}
                 </div>
               </div>
             </div>

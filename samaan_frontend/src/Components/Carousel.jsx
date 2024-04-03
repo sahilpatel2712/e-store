@@ -32,7 +32,7 @@ const Carousel = () => {
       >
         {images.map((image, index) => {
           return (
-            <SplideSlide>
+            <SplideSlide key={index}>
               <a href="#">
                 <img src={image} alt="" className="CarouselImage" />
               </a>

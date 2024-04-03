@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 import ProductCardTwo from "./ProductCardTwo";
 import { SkeletonCardTwo } from "./Skeletons";
 import { useSelector } from "react-redux";
@@ -8,19 +8,17 @@ const CategoryProducts = () => {
   const { id } = useParams();
   const [data, setData] = useState([]);
   const { productsData } = useSelector((state) => state.products);
-  const navigate = useNavigate();
+  const [loading, setLoading] = useState(true);
+  const location = useLocation();
+
   useEffect(() => {
     let filterData = productsData.filter(
       (product) => product.categoryId === Number(id)
     );
-    if (productsData.length !== 0) {
-      if (filterData.length !== 0) {
-        setData(filterData);
-      } else {
-        navigate("*");
-      }
-    }
-  }, [productsData]);
+    setLoading(false);
+    setData(filterData);
+  }, [productsData, location]);
+
   return (
     <div>
       <div className="w-[100%] h-[100%] mt-[8rem]   ">
@@ -30,7 +28,7 @@ const CategoryProducts = () => {
               <div>
                 <div className="RightOuter">
                   <div className="ProductsDiv">
-                    {data.length !== 0
+                    {data.length !== 0 && !loading
                       ? data.map((item, id) => {
                           return (
                             <ProductCardTwo
@@ -44,6 +42,8 @@ const CategoryProducts = () => {
                             />
                           );
                         })
+                      : data.length === 0 && !loading
+                      ? "No Products"
                       : [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1].map(
                           (item, id) => {
                             return <SkeletonCardTwo />;

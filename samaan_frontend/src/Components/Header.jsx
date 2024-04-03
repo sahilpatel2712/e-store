@@ -194,9 +194,8 @@ const Header = () => {
             >
               <ul>
                 <li className="UserNamePopOver">
-                  <p className="m-0" >{auth.user ? `${auth.user.name}` : ""}</p>
+                  <p className="m-0">{auth.user ? `${auth.user.name}` : ""}</p>
                 </li>
-       
 
                 <li className="PopoverLine">
                   <div onClick={handleLogOut}>
@@ -227,7 +226,7 @@ const Header = () => {
           >
             <a className="CartLink VCenter-flex ">
               <p className="NavImageWrapper bg-yellow-300  rounded-2xl CartContent   w-[3rem] h-[3rem]  hover:shadow-md transition-all duration-500  ease-in-out  VCenter-flex">
-                <BuyIcon/>
+                <BuyIcon />
               </p>
             </a>
           </div>
@@ -240,6 +239,7 @@ const Header = () => {
               return (
                 <li className="MenuBannerLi" id="Third" key={index}>
                   <Link
+                    to={`/category/${item.categoryId}`}
                     className={`${
                       activeCategory === 2 ? "activeCate" : ""
                     } HoverEffectLink MenuBannerLink`}

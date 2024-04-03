@@ -26,7 +26,7 @@ export const getUserOrderData = (userId) => {
           headers: Headers,
         }
       );
-      dispatch(setOrder(response.data));
+      dispatch(setOrder(response.data.reverse()));
     } catch (error) {
       console.log(error);
     }
@@ -38,6 +38,13 @@ export const addOrder = (data) => {
     try {
       let { token } = getState().auth;
       const Headers = { authorization: token };
+      await axios.post(
+        `${process.env.REACT_APP_BASE_URL}/cart/delete/:cartId`,
+        getState().cart.cartData,
+        {
+          headers: Headers,
+        }
+      );
       let response = await axios.post(
         `${process.env.REACT_APP_BASE_URL}/orders/order/add`,
         data,

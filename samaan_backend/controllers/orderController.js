@@ -1,3 +1,4 @@
+const CartModel = require("../models/cart");
 const OrderModel = require("../models/order");
 
 module.exports = {
@@ -39,6 +40,26 @@ module.exports = {
     } catch (error) {
       console.error("Error adding order:", error);
       res.json({ error: "Internal Server Error" });
+    }
+  },
+  updateOrder: async (req, res, next) => {
+    try {
+      const { orderId } = req.params;
+      const { status } = req.body;
+
+      const order = await OrderModel.findByPk(orderId);
+      if (!order) {
+        return res.status(404).json({ error: "Order not found" });
+      }
+
+      order.status = status;
+
+      await order.save();
+
+      res.json({ message: "Order updated successfully", order });
+    } catch (error) {
+      console.error("Error updating order:", error);
+      res.status(500).json({ error: "Internal Server Error" });
     }
   },
 };
