@@ -28,6 +28,7 @@ const Home = () => {
 
       {categoriesData.map((item) => (
         <ProductsDiv
+          key={item.categoryId}
           Category={item.categoryName}
           categoryId={item.categoryId}
         />

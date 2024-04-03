@@ -4,8 +4,12 @@ import Skeleton from "react-loading-skeleton";
 import { useNavigate, useParams } from "react-router-dom";
 import UserReviews from "../../Components/UserReviews";
 import { useSelector, useDispatch } from "react-redux";
-import { addOrUpdateUserCart } from "../../redux/reducers/cart";
+import {
+  addOrUpdateUserCart,
+  getUserCartData,
+} from "../../redux/reducers/cart";
 import { addFeedback, getFeedback } from "../../redux/reducers/feedback";
+import axios from "axios";
 
 const ProductDetails = () => {
   const { id } = useParams();
@@ -20,6 +24,29 @@ const ProductDetails = () => {
   const [ReviewText, setReviewText] = React.useState("");
   const [averageReview, setAverageReview] = React.useState(0);
   const { navigate } = useNavigate();
+  const [itemFoundInCart, setItemFoundInCart] = React.useState(null);
+  const [loading, setLoading] = React.useState(false);
+  const { cartData } = useSelector((state) => state.cart);
+
+  React.useEffect(() => {
+    setItemFoundInCart(
+      cartData.find((item) => {
+        return item.productId === Number(id);
+      })
+    );
+  }, [cartData]);
+
+
+  React.useEffect(() => {
+    if (auth.isAuthenticated) {
+      if (auth.user) {
+        dispatch(getUserCartData(auth.user.userId));
+      }
+    }
+  }, [auth.user]);
+
+  console.log("cartData", itemFoundInCart,id);
+
   const handleProductAdd = (productId) => {
     if (auth.isAuthenticated) {
       dispatch(
@@ -33,6 +60,7 @@ const ProductDetails = () => {
       navigate("/login");
     }
   };
+
   const handleAddReview = () => {
     if (auth.isAuthenticated) {
       let feedbackData = {
@@ -48,9 +76,11 @@ const ProductDetails = () => {
       navigate("/login");
     }
   };
+
   useEffect(() => {
     dispatch(getFeedback(id));
   }, []);
+
   useEffect(() => {
     const sumRatings = feedbacksData.reduce(
       (acc, feedback) => acc + feedback.ratings,
@@ -59,6 +89,19 @@ const ProductDetails = () => {
     const averageRatings = sumRatings / feedbacksData.length;
     setAverageReview(averageRatings);
   }, [feedbacksData]);
+
+  const handleChangeQuantity = async (quantity, productId) => {
+    setLoading(true);
+    await axios.post(`${process.env.REACT_APP_BASE_URL}/cart/add`, {
+      data: {
+        userId: auth.user.userId,
+        productId: productId,
+        quantity: quantity,
+      },
+    });
+    dispatch(getUserCartData(auth.user.userId));
+    setLoading(false);
+  };
 
   return (
     <div>
@@ -93,13 +136,59 @@ const ProductDetails = () => {
                 <Skeleton className="h-[400px] min-w-[300px] w-[100%] rounded-[30px]" />
               )}{" "}
               <div className="w-[100%] AddToCartWrapper ">
-                <button
-                  className="w-[100%] h-[90%]  shadow-md rounded-md bg-yellow-300 text-green-800 text-xs font-bold  AddToCartButton"
-                  onClick={() => handleProductAdd(id)}
-                >
-                  {" "}
-                  Add to cart
-                </button>
+                {itemFoundInCart ? (
+                  <>
+                    <div className="px-2 d-flex align-items-center">
+                      {loading ? (
+                        <Skeleton width={20} height={20} />
+                      ) : (
+                        <button
+                          className="bg-yellow-300 text-black px-2 d-flex justify-content-center align-items-center "
+                          style={{
+                            borderRadius: "50%",
+                            height: "fit-content",
+                          }}
+                          onClick={() => {
+                            handleChangeQuantity(-1, id);
+                          }}
+                        >
+                          -
+                        </button>
+                      )}
+                      <div className="d-flex justify-content-center align-items-center p-2">
+                        {loading ? (
+                          <Skeleton width={20} height={20} />
+                        ) : (
+                          itemFoundInCart.quantity
+                        )}
+                      </div>
+                      {loading ? (
+                        <Skeleton width={20} height={20} />
+                      ) : (
+                        <button
+                          className="bg-yellow-300 text-black px-2 d-flex justify-content-center align-items-center "
+                          style={{
+                            borderRadius: "50%",
+                            height: "fit-content",
+                          }}
+                          onClick={() => {
+                            handleChangeQuantity(1, id);
+                          }}
+                        >
+                          +
+                        </button>
+                      )}
+                    </div>
+                  </>
+                ) : (
+                  <button
+                    className="w-[100%] h-[90%]  shadow-md rounded-md bg-yellow-300 text-green-800 text-xs font-bold  AddToCartButton"
+                    onClick={() => handleProductAdd(id)}
+                  >
+                    {" "}
+                    Add to cart
+                  </button>
+                )}
               </div>
             </div>
 

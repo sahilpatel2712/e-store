@@ -50,14 +50,11 @@ const cartController = {
 
   deleteCartByCartId: async (req, res, next) => {
     try {
-      const { cartId } = req.params;
-
-      const deletedCart = await CartModel.destroy({
-        where: { cartId: cartId },
+      req.body.map(async (cart) => {
+        await CartModel.destroy({
+          where: { cartId: cart.cartId },
+        });
       });
-      if (!deletedCart) {
-        return res.status(404).json({ error: "Cart not found" });
-      }
 
       res.json({ message: "Product deleted successfully" });
     } catch (error) {

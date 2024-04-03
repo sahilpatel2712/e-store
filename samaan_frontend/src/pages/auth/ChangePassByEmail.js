@@ -26,7 +26,6 @@ const ChangePassByEmail = () => {
             validationSchema={changePassValidationSchema}
             onSubmit={(values, { resetForm }) => {
               // Handle form submission here
-              console.log(values); // You can replace this with your actual submission logic
               resetForm(); // Reset the form after successful submission
             }}
           >

@@ -1,9 +1,16 @@
 import React, { useState } from "react";
-import { Button, Card, CardBody, Collapse } from "reactstrap";
+import {
+  Button,
+  Card,
+  CardBody,
+  Collapse,
+
+} from "reactstrap";
 import Down from "../aseets/icons/Down";
 import Up from "../aseets/icons/Up";
 import { useDispatch, useSelector } from "react-redux";
 import Order, { getUserOrderData } from "../redux/reducers/order";
+import axios from "axios";
 
 const CancelledProgress = () => {
   return (
@@ -107,8 +114,25 @@ const ProductInfo = ({ product }) => {
 
 const OrderDetails = ({ order }) => {
   const [isOpen, setIsOpen] = useState(false);
+  const auth = useSelector((state) => state.auth);
 
+  const dispatch = useDispatch();
   const toggle = () => setIsOpen(!isOpen);
+
+  const handleCancel = async () => {
+    try {
+      const response = await axios.post(
+        `${process.env.REACT_APP_BASE_URL}/orders/order/update/${order.orderId}`,
+        {
+          status: "CANCELLED",
+        },
+        { headers: { authorization: auth.token } }
+      );
+      dispatch(getUserOrderData(auth?.user?.userId));
+    } catch (error) {
+      console.error("Error Cancelling Order:", error);
+    }
+  };
 
   return (
     <div
@@ -158,7 +182,20 @@ const OrderDetails = ({ order }) => {
       {order.status === "CANCELLED" ? (
         <CancelledProgress />
       ) : (
-        <StepProgress step={order.status} />
+        <>
+          <StepProgress step={order.status} />
+          {order.status !== "DELIVERED" && (
+            <div className="w-100 d-flex justify-content-end">
+              <button
+                className="px-2 rounded "
+                style={{ color: "red", border: "1px solid red" }}
+                onClick={handleCancel}
+              >
+                Cancel Order
+              </button>
+            </div>
+          )}
+        </>
       )}
       <Collapse isOpen={isOpen}>
         <Card>
@@ -177,30 +214,36 @@ const Orders = () => {
   const dispatch = useDispatch();
   const auth = useSelector((state) => state.auth);
   const orderData = useSelector((state) => state.order);
+  
 
   React.useEffect(() => {
-    dispatch(getUserOrderData(auth.user.userId));
-    console.log(auth);
-  }, []);
-
-  React.useEffect(() => {
-    console.log(orderData, "orderData");
-  }, [orderData]);
+    dispatch(getUserOrderData(auth?.user?.userId));
+  }, [auth?.user?.userId]);
 
   return (
-    <div className="w-[100%] min-h-[100vh] mt-[10rem] d-flex flex-column px-5">
-      <div className="CartHeader">
-        <h1>Shopping Order :</h1>
+    <>
+      <div className="w-[100%] min-h-[100vh] mt-[10rem] d-flex flex-column px-5">
+        <div className="CartHeader">
+          <h1>Shopping Order :</h1>
+        </div>
+        <div className="d-flex flex-column gap-4">
+          {orderData.orderData.length !== 0 ? (
+            orderData.orderData.map((order, index) => (
+              <OrderDetails
+                key={index}
+                order={{ ...order, name: auth.user.name }}
+              />
+            ))
+          ) : (
+            <div className="d-flex flex-grow-1 justify-content-center align-items-center ">
+              <h1>No Orders Found</h1>
+            </div>
+          )}
+        </div>
       </div>
-      <div className="d-flex flex-column gap-4">
-        {orderData.orderData.map((order, index) => (
-          <OrderDetails
-            key={index}
-            order={{ ...order, name: auth.user.name }}
-          />
-        ))}
-      </div>
-    </div>
+
+     
+    </>
   );
 };
 
