@@ -45,7 +45,6 @@ const ProductDetails = () => {
     }
   }, [auth.user]);
 
-  console.log("cartData", itemFoundInCart,id);
 
   const handleProductAdd = (productId) => {
     if (auth.isAuthenticated) {

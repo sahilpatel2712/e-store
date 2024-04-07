@@ -59,7 +59,6 @@ const ProductCardTwo = ({
         return item.productId === productId;
       })
     );
-    console.log("cartData", cartData);
   }, [cartData]);
 
   React.useEffect(() => {

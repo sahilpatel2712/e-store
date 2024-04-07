@@ -24,7 +24,7 @@
                     </dd>
                     <dt class="col-sm-4">Order Status</dt>
                     <dd class="col-sm-8"
-                        style="<%= data.status === 'DELIVERED' ? 'color: #28a745;' : 'color: #ffc107;' %>font-weight: bold;">
+                        style=" <%= data.status==='CANCELLED'?'color: #dc3545;': data.status === 'DELIVERED' ? 'color: #28a745;' : 'color: #ffc107;' %>font-weight: bold;">
                         <%= data.status %>
                     </dd>
                     <dt class="col-sm-4">Total</dt>

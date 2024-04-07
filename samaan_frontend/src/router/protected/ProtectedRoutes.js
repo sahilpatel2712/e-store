@@ -8,7 +8,6 @@ const ProtectedRoutes = () => {
 
   React.useEffect(() => {
     if (!true) {
-      console.log("object");
       navigate("/login");
     }
   }, [navigate, isAuthenticated]);

@@ -32,7 +32,6 @@ export const userCreate = (data) => {
         `${process.env.REACT_APP_BASE_URL}/registration`,
         data
       );
-      console.log(response);
       localStorage.setItem("userAuthToken", response.data.authToken);
       dispatch(setUser(response.data.userData));
       dispatch(setToken(response.data.authToken));

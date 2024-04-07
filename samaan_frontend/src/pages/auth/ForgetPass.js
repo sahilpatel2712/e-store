@@ -9,29 +9,7 @@ import { useNavigate } from "react-router-dom";
 
 const FogetPass = () => {
   const navigate = useNavigate();
-  const handleForgotPassword = async (value) => {
-    console.log(value);
-    // const email = e.target[0].value;
-    // await fetch(
-    //   "https://api-krudra9125-gmailcom.vercel.app/api/send-reset-password/",
-    //   {
-    //     method: "POST",
-    //     headers: { "Content-Type": "application/json" },
-    //     body: JSON.stringify({ email: email }),
-    //   }
-    // )
-    //   .then((res) => res.json())
-    //   .then((data) => {
-    //     if (data["errors"]) {
-    //       console.log(data);
-    //       alert("user not found");
-    //     } else {
-    //       console.log(data);
-    //       Navigate("/");
-    //       alert("email sent");
-    //     }
-    //   });
-  };
+  
   return (
     <>
       <div className="w-[100%] flex flex-col items-center justify-center">

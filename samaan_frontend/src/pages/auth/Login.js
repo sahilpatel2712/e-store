@@ -12,27 +12,7 @@ import { userLog } from "../../redux/reducers/auth";
 const Login = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  //   const [forgotPasswordForm, setForgotPasswordForm] = React.useState(false);
-
-  //   const handleLogin = async (e) => {
-  //     e.preventDefault();
-  //     const email = e.target[0].value;
-  //     const password = e.target[1].value;
-  //     await fetch("https://api-krudra9125-gmailcom.vercel.app/api/login/", {
-  //       method: "POST",
-  //       headers: { "Content-Type": "application/json" },
-  //       body: JSON.stringify({ email: email, password: password }),
-  //     })
-  //       .then((res) => res.json())
-  //       .then((data) => {
-  //         if (data.status === 200) {
-  //           console.log(data);
-  //         } else {
-  //           alert("EMAIL OR PASSWORD ARE INCORRECT");
-  //         }
-  //       });
-  //   };
-
+ 
   const handleLogin = async (value) => {
     dispatch(userLog(value));
     navigate("/");

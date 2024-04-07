@@ -13,24 +13,7 @@ const ProductCard = ({
   const [quantity, setQuantity] = React.useState(
     cartQuantity !== undefined ? cartQuantity : 0
   );
-  const navigate = useNavigate();
-  // const changeQuantity = async (q) => {
-  //   if (authTokens["access"]) {
-  //     const response = await fetch(
-  //       "https://api-krudra9125-gmailcom.vercel.app/api/cart/",
-  //       {
-  //         method: "POST",
-  //         headers: {
-  //           "Content-Type": "application/json",
-  //           Authorization: `Bearer ${authTokens["access"]}`,
-  //         },
-  //         body: JSON.stringify({ product: productId, quantity: q }),
-  //       }
-  //     );
-  //     const data = await response.json();
-  //     console.log(data);
-  //   }
-  // };
+  
   return (
     <div style={{ display: "flex", justifyContent: "center" }}>
       <div className=" w-[15rem] h-[20rem]   flex flex-col  bg-white  items-center justify-end  rounded-[1.2rem] box-border  ">
